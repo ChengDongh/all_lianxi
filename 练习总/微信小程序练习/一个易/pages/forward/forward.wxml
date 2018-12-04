@@ -1,0 +1,17 @@
+<view>
+  <view class="summary">
+    <text class="=ktitlecolor font_14 summary-title">文本素材</text>
+    <text selectable class="font_14 kcontentcolor">{{summary}}</text>
+  </view>
+  <view class="style">
+    <text class="=ktitlecolor font_14 summary-title">图片素材</text>
+    <view wx:for="{{styles}}" wx:key="{{title}}" class="style-item">
+      <text class="title" selectable>{{item.title}}</text>
+      <view class="images">
+        <view wx:for="{{item.images}}" wx:for-item="img" wx:key="{{self}}" bindtap="showImage" data-url="{{img}}" class="item">
+          <image src="{{img}}"></image>
+        </view>
+      </view>
+    </view>
+  </view>
+</view>

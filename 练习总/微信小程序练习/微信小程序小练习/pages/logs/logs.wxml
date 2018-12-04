@@ -1,0 +1,16 @@
+<!--logs.wxml-->
+<view class='phone'>
+  <text>拨打热线-10000</text>
+</view>
+<view class='boda' bindtap='call'>
+  <text>10000</text>
+</view>
+<view class='scanCode' bindtap='scanCode'>
+  <text>扫码</text>
+</view>
+<view class='level'>
+  <text>电量:{{level}}</text><text>是否充电:{{isCharging?'是':'否'}}</text>
+</view>
+
+<view>内容：{{contents}} </view>
+<view  bindtap='copyText' data-text="{{contents}}">复制</view>

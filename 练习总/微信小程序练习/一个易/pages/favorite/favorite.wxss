@@ -1,0 +1,94 @@
+/* pages/favorite/favorite.wxss */
+.favoritebox{
+  width: 100%;
+  overflow: hidden;
+}
+.all{
+  box-sizing: border-box;
+  background-color: white;
+  width: 870rpx;
+  transition:all 0.2s ease-in-out;
+  display: flex;
+  justify-content:space-between;
+  padding: 0rpx 0rpx 20rpx 0rpx;
+}
+.alllist{
+  flex-grow: 1;
+}
+.favorite_head{
+margin-top: 20rpx;  
+padding: 20rpx;
+}
+.favorite_head text{
+  font-size: 32rpx;
+  color: #1A1A1A;
+  margin-left: 10rpx;
+}
+.favorite_head image{
+  width: 34rpx;
+  height: 32rpx;
+  vertical-align: middle;
+}
+.favorite_body{
+  background-color: #FAFAFA;
+  /* padding: 10rpx 20rpx 10rpx 20rpx; */
+  display: flex;
+  padding: 20rpx 0rpx;
+}
+.favorite_body_img{
+width: 180rpx;
+height: 180rpx;
+margin: 0rpx 0rpx 0rpx 20rpx;
+}
+.favorite_body_title{
+  font-size: 28rpx;
+  color: #1A1A1A;
+  margin-left: 30rpx;
+  display: flex;
+  flex-direction: column;
+   justify-content: space-between;
+}
+.title_head{
+  display: inline-flex;
+  flex-direction: column;
+
+}
+.title_head text:first-child{
+    width: 480rpx;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow:ellipsis;
+}
+.title_head text:last-child{
+  color: #999999;
+  font-size: 28rpx;
+}
+.body_cz{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.body_cz text{
+color: #FC911D;
+font-size: 28rpx;
+}
+.body_cz  button{
+  font-size: 24rpx;
+  border-color: #FC911D;
+  color: #FC911D;
+  line-height: 47rpx;
+}
+.nofavorite{
+  color: #999999;
+  font-size: 30rpx;
+  text-align: center;
+  margin-top: 200rpx;
+}
+ .delete-btn{
+    width: 120rpx;
+    line-height: 270rpx;
+    text-align: center;
+    background:#FC911D;
+    font-size: 24rpx;
+    color: #fff;
+}

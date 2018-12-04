@@ -1,0 +1,13 @@
+<import src="../component/product_table.wxml" />
+<view style="background-color:{{color}}" class="activity">
+  <image class="banner" mode="aspectFit" wx:if="{{banner_pic}}" src="{{banner_pic}}" bindload="banner_imageLoad" style="height: {{imageHeight}}rpx;"></image>
+  <view class="module" wx:for="{{activitySettingInfos}}" wx:key="id" wx:for-index="idx" style="background-color:{{item.color}}">
+    <image class="banner" mode="aspectFit" wx:if="{{item.head_pic}}" src="{{item.head_pic}}" bindload="head_imageLoad" data-index="{{idx}}" style="height: {{item.imageHeight}}rpx;"></image>
+    <view class="hot" wx:if="{{item.hot_flag == 1 && item.hotProducts && item.hotProducts.length > 0}}">
+      <template is="product_table" data="{{products:item.hotProducts,type:1}}" />
+    </view>
+    <view class="hot" wx:if="{{item.products && item.products.length > 0}}">
+      <template is="product_table" data="{{products:item.products,type:1}}" />
+    </view>
+  </view>
+</view>

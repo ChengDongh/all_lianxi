@@ -1,0 +1,86 @@
+/* pages/refund/refund.wxss */
+/* 订单头部信息 */
+.order-title{
+  background-color: white;
+  padding: 20rpx 30rpx;
+  margin: 0rpx 0rpx 20rpx 0rpx;
+}
+.order-title view{
+  display: flex;
+ justify-content: space-between;
+ align-items: center;
+}
+.order-title view text{
+  line-height: 60rpx;
+  color: 1A1A1A;
+  font-size: 28rpx;
+}
+.order-title-price{
+  color: #FC911D;
+}
+/* 订单下部信息选择 */
+.order-type{
+  background-color: white;
+  padding: 30rpx;
+}
+.order-type>view{
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  border-bottom: 1rpx solid #E6E6E6;
+}
+.order-type .selectpacker image{
+  width: 17rpx;
+  height: 30rpx;
+}
+.order-type view text:first-child{
+margin: 0rpx 45rpx 0rpx 0rpx;
+}
+.selectpacker{
+ flex-grow: 1;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.order-type  text,.order-type  input{
+  line-height: 100rpx;
+  color: #1A1A1A;
+  font-size: 28rpx;
+}
+.order-type  textarea{
+  color: #1A1A1A;
+  font-size: 28rpx;
+  width: 500rpx;
+}
+.order-type>view.imagebox{
+  display: flex;
+  align-items: flex-start;
+}
+.upimage view{
+  display: inline-block;
+  position: relative;
+    margin: 0rpx 10rpx;
+}
+.upimage image{
+  width: 120rpx;
+  height: 120rpx;
+}
+.bottom{
+  width: 690rpx;
+  margin: 30rpx  auto;
+}
+.productanme{
+  width: 400rpx;
+  white-space: nowrap;
+   overflow: hidden; 
+   word-break: break-all; 
+   text-overflow: ellipsis; 
+  -webkit-line-clamp:1;
+  -webkit-box-orient: vertical;
+}
+.cancelicon{
+  position: absolute;
+  right: -10px;
+  top: -10px;
+  z-index: 999;
+}

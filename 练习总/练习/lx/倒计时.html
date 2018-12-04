@@ -1,0 +1,37 @@
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title></title>
+    </head>
+    <body>
+        
+        <div id="countdown">还剩 10 分 00 秒</div>
+
+        <script>
+                    
+            window.onload=function(){
+                var countdown=document.getElementById("countdown");
+                
+                var time=600;//30分钟换算成1800秒
+                 
+                
+                setInterval(function(){
+                    time=time-1;
+                   var minute=parseInt(time/60);
+                   var second=parseInt(time%60);
+                   if(minute<10){
+                   	minute = '0'+minute
+                   }
+                   if(second<10){
+                   	second = '0'+second
+                   }
+                    countdown.innerHTML=minute+':'+second;
+                
+                
+                },1000);
+            }
+            
+        </script>
+
+    </body>
+</html>

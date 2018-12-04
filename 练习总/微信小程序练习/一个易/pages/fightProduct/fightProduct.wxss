@@ -1,0 +1,329 @@
+page view {
+  overflow: hidden;
+}
+
+
+
+.swiperbitem {
+  width: 100%;
+  height: 100%;
+}
+
+.sliderbimg {
+  width: 70%;
+  height: 100%;
+  margin-left: 15%;
+}
+
+.sucai-tip {
+  width: 30rpx;
+  height: 100%;
+  margin-left: 100rpx;
+
+}
+
+
+.productbname {
+  background-color: white;
+  padding-top: 14rpx;
+}
+
+.countrybicon {
+  width: 40rpx;
+  height: 28rpx;
+}
+
+.productbprice {
+  background-color: white;
+  padding-left: 24rpx;
+  padding-bottom: 12rpx;
+  align-items: center;
+}
+.productbprice .hongbaoMsg{
+  color: red;
+  font-size: 28rpx;
+  float: right;
+  margin-right: 10%;
+}
+.productbprice .image{
+  border: 1rpx solid red;
+  border-radius: 10rpx;
+  display: flex;
+  justify-content: center;
+  width: 180rpx;
+  height: 50rpx;
+  align-items: center;
+  padding-left: 20rpx;
+}
+
+.productbpriceblabel {
+  color: #f3244b;
+  font-size: 32rpx;
+  height: 36rpx;
+  line-height: 36rpx;
+  padding-right: 24rpx;
+  text-align: center;
+  justify-content: space-around;
+  display: inline-block;
+  overflow: hidden;
+  margin-top: 20rpx;
+}
+
+.proposebpriceblabel {
+  color: #999;
+  font-size: 26rpx;
+  height: 36rpx;
+  line-height: 36rpx;
+  padding-right: 24rpx;
+  text-align: center;
+  justify-content: space-around;
+  display: inline-block;
+  overflow: hidden;
+}
+
+.levelbicon {
+  width: 108rpx;
+  height: 36rpx;
+}
+
+.service-tip {
+  background-color: #fff7f8;
+  padding: 24rpx;
+}
+
+.service-item {
+  display: inline-flex;
+  flex-direction: row;
+  overflow: hidden;
+  padding-right: 24rpx;
+  align-items: center;
+}
+
+.service-item icon {
+  margin-right: 6rpx;
+  overflow: hidden;
+}
+
+.service-item text {
+  color: #666;
+  font-size: 28rpx;
+  overflow: hidden;
+}
+
+.delivery {
+  background-color: white;
+  display: flex;
+  flex-direction: column;
+}
+
+.delivery-free {
+  background-color: #fff7f8;
+  display: inline-block;
+  overflow: hidden;
+  width: 100%;
+  padding-left: 24rpx;
+  padding-top: 12rpx;
+  padding-bottom: 12rpx;
+}
+
+.delivery-free-tip {
+  background-color: #f3244b;
+  font-size: 24rpx;
+  color: white;
+  height: 32rpx;
+  line-height: 32rpx;
+  margin-right: 12rpx;
+}
+
+.delivery-free-label {
+  color: #666;
+  font-size: 28rpx;
+  height: 32rpx;
+  line-height: 32rpx;
+}
+
+.delivery-item {
+  display: inline-block;
+  overflow: hidden;
+  width: 100%;
+  padding-left: 24rpx;
+  padding-top: 12rpx;
+  padding-bottom: 12rpx;
+}
+
+.delivery-item .ksubtitlecolor {
+  padding-right: 24rpx;
+}
+
+.product-summary {
+  background-color: white;
+  padding: 24rpx;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.product-summary .ktitlecolor {
+  margin-bottom: 24rpx;
+}
+
+.brand {
+  overflow: hidden;
+  display: inline-flex;
+  flex-direction: row;
+  background-color: white;
+  align-items: center;
+  height: 160rpx;
+  width: 100%;
+}
+
+.brand-logo {
+  width: 100rpx;
+  height: 100rpx;
+  padding: 30rpx 24rpx;
+}
+
+.brand-info {
+  overflow: hidden;
+  display: inline-flex;
+  flex-direction: column;
+  width: 650rpx;
+}
+
+.brand-info text {
+  margin-top: -16rpx;
+}
+
+.specification {
+  background-color: white;
+  display: flex;
+  flex-direction: column;
+  padding: 12rpx 24rpx;
+}
+
+.specification-item {
+  padding-bottom: 12rpx;
+  display: inline-block;
+  overflow: hidden;
+}
+
+.specification-title {
+  color: #999;
+  font-size: 28rpx;
+}
+
+.specification-value {
+  color: #353535;
+  font-size: 28rpx;
+  margin-left: 24rpx;
+}
+
+.kmlbzhengpinbpic {
+  width: 100%;
+  height: 240rpx;
+}
+
+.product-op {
+  background-color: white;
+  display: inline-flex;
+  flex-direction: row;
+  width: 80%;
+  z-index: 100;
+  margin-bottom: 20rpx;
+  margin-top: 50rpx;
+  margin-left: 10%;
+}
+
+.product-images {
+  width: 50%;
+  border-radius: 0;
+  background-color: #ff758f;
+  color: white;
+}
+
+.product-soldout {
+  width: 50%;
+  border-radius: 0;
+}
+
+.product-buy {
+  width: 100%;
+  background-color: #f3244b;
+  color: white;
+  border-radius: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.footer {
+  height: 100rpx;
+  width: 100%;
+}
+
+.service-mask {
+  position: fixed;
+  background-color: white;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 2;
+}
+
+.service-title {
+  text-align: center;
+  width: 100%;
+  height: 88rpx;
+  line-height: 88rpx;
+  border-bottom: 1rpx solid #e0e0e0;
+  display: inline-flex;
+  justify-content: space-around;
+}
+
+.service-tip-item {
+  padding: 12rpx 32rpx;
+  display: flex;
+  flex-direction: column;
+}
+.product_list {
+  padding-bottom: 50rpx
+}
+
+/*shopcar*/
+
+@import "/pages/component/product_collection.wxss";
+.swiper {
+  width: 100%;
+  height: 500rpx;
+}
+
+.swiper swiper-item {
+  width: 100%;
+  height: 100%;
+}
+.coupon {
+  position:relative;
+  font-size: 28rpx;
+  background: #ff758f;
+  height: 80rpx;
+}
+.couponText {
+  position: absolute;
+  animation:animal 2s linear alternate infinite;
+  left: 0rpx;
+}
+@keyframes animal {
+  form {
+    left: 0rpx;
+  }
+  to {
+    left: 180rpx;
+  }
+}
+.banner {
+  background: #fff;
+}
+.price {
+  color: red;
+  text-decoration: line-through;
+}

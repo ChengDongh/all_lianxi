@@ -1,0 +1,4 @@
+<import src="../component/product_table.wxml" />
+<view>
+    <template is="product_table" data="{{ products }}" />
+</view>

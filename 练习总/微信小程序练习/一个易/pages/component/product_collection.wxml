@@ -1,0 +1,14 @@
+<template name="product_collection">
+  <scroll-view scroll-x="true" class="product_scroller">
+    <navigator wx:for="{{ product.productInfosResult }}" wx:key="id" url="/pages/product/product?id={{item.id}}" hover-class="navigator-hover" class="product_cell">
+      <!--<image src="{{item.carousel_image}}" class="product_item_image"></image>-->
+      <text class="product_title_text font_13 kcontentcolor">{{item.title}}</text>
+      <text class="product_price font_16 kredcolor">¥{{item.min_price}} </text>
+    </navigator>
+    <block wx:if="{{product.needLookMore}}">
+      <navigator class="product_cell" url="{{product.url}}">
+        <image src="/resource/image/country_more.png" class="product_item_image"></image>
+      </navigator>
+    </block>
+  </scroll-view>
+</template>

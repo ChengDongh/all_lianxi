@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>event</title>
+    <style>
+        #box {
+            width: 100px;
+            height: 100px;
+            background-color: aquamarine;
+            position: absolute;
+        }
+    </style>
+</head>
+<body>
+    <!--<div id="box"></div>-->
+    <button onclick="stringToBytes">dianji</button>
+    <!--<script type="text/javascript">
+        var oDiv = document.getElementById("box");
+        oDiv.onmousedown=function(ev)
+        {
+            var oEvent = ev; 
+            var disX = oEvent.clientX - oDiv.offsetLeft;
+            var disY = oEvent.clientY - oDiv.offsetTop;
+            document.onmousemove=function (ev)
+            {
+                oEvent = ev;
+                oDiv.style.left = oEvent.clientX -disX+"px";
+                oDiv.style.top = oEvent.clientY -disY+"px";
+            }
+            document.onmouseup=function()
+            {
+               document.onmousemove=null;
+               document.onmouseup=null;
+            }
+            
+        }
+        
+    </script>-->
+    <script type="text/javascript">
+//  	var str='4FEEEEEE'
+    function stringToBytes(str) {
+      var array = new Uint8Array(str.length);
+      for (var i = 0, l = str.length; i < l; i++) {
+        array[i] = str.charCodeAt(i);
+      }
+      console.log(array.buffer);
+      return array.buffer;
+    }  
+    var buf = stringToBytes('4FEEEEEE')
+    console.log(buf)
+    </script>
+</body>
+</html>

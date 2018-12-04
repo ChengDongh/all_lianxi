@@ -1,0 +1,25 @@
+<view>
+  <view class='expressbox' wx:for="{{expressArray}}" wx:for-item="express" wx:key="{{express.id}}"  bindtap="selectTap" bindtouchstart="touchS" style="{{express.left}}" bindtouchmove="touchM" bindtouchend="touchE" data-index="{{index}}">
+    <view class="express" data-express="{{express}}" bindtap='backaddress'>
+      <view class='addimg'>
+        <image src='../../resource/image/edit.png' data-id="{{express.id}}" catchtap='goExpressDetail' class='editaddress'></image>
+      </view>
+      <view class='express-name'>
+        <text class="font_14 kcontentcolor">{{express.name +'　　' + express.mobile}}</text>
+        <!-- <image wx:if="{{express.id_name.length + express.id_card.length > 0}}" src="/resource/image/id_bind.png"></image>  -->
+        <text class="express-adress font_14 kcontentcolor">{{express.province}}{{express.city}}{{express.area}}{{express.location}}</text>
+      </view>
+    </view>
+    <view class="delete-btn" data-index="{{index}}" catchtap="delItem">
+      删除
+    </view>
+  </view>
+  <view class="bottom" bindtap="addaddress">
+    <image src="../../resource/image/add_idcard.png" mode="scaleToFill"></image>
+    <view>添加新地址</view>
+    <image src="../../resource/image/icon_right_more.png"></image>
+  </view>
+
+  <view class="foot"></view>
+
+</view>

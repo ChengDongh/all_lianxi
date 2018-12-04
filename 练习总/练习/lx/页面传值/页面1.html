@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<script src="../jquery.js" type="text/javascript" charset="utf-8"></script>
+	</head>
+	<body>
+		<input type="" name="" id="text_val" value=""/>
+		<button onclick="btn_to()">跳转页面</button>
+		<script type="text/javascript">
+			function setCookie(cname,cvalue,exdays){
+				var d = new Date();
+				d.setTime(d.getTime() + (exdays * 24 * 60 * 60 * 1000))
+				var expires = "expires=" + d.toGMTString();
+				document.cookie = cname + "=" + cvalue + ";" + expires;
+			}
+			function getCookie(cname){
+				var name = cname + "=";
+				var ca = document.cookie.split(';');
+				for(var i=0;i<ca.length;i++){
+					var c = ca[i].trim();
+					if(c.indexOf(name)==0){
+						return c.substring(name.length,c.length);
+					}
+				}
+				return;
+			}
+			function btn_to(){
+//				window.location.replace("页面2.html?" + "id=" + encodeURI($('#text_val').val()) + "&" + "ids=" + encodeURI($('#text_val').val()) + "&" + "cookie=" + getCookie('sss'));
+
+				location.href = "页面2.html?" + "id=" + $('#text_val').val() + "&" + "ids=" + $('#text_val').val() + "&" + "cookie=" + getCookie('sss') + "&" + "localStorage=" + localStorage.aaa
+			}
+		</script>
+	</body>
+</html>

@@ -1,0 +1,80 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
+		<meta content="yes" name="apple-mobile-web-app-capable">
+		<meta content="black" name="apple-mobile-web-app-status-bar-style">
+		<meta content="telephone=no" name="format-detection">
+		<meta content="email=no" name="format-detection">
+		<title>上传图片</title>
+		<link rel="stylesheet" href="css/LUploader.css">
+		<script src="jquery.js"></script>
+		<style></style>
+	</head>
+
+	<body>
+		<input type="file" onchange="upload(this)" />
+		<img id="aaa" src="" alt="" />
+		<script type="text/javascript">
+			function upload(e) {
+				var formData = new FormData();
+				console.log(formData)
+				for(var i = 0; i < e.files.length; i++) {
+					formData.append("img", e.files[i]);
+					$.ajax({
+						type: "post",
+						url: "http://yiapi.qiqiangkeji.com/upload",
+						async: true,
+						data: formData,
+						dataType: "json",
+						processData: false,
+						contentType: false,
+						xhrFields: {
+							withCredentials: true
+						},
+						success: function(res) {
+							if(res.code == 0) {
+								$('#aaa').attr("src", res.data.url)
+							}
+						},
+					});
+				}
+
+			}
+
+			//			function up(file) {
+			//				var that = this;
+			//				$.ajax({
+			//					type: "POST",
+			//					url: 'http://yiapi.qiqiangkeji.com/upload',
+			//					async: true,
+			//					data: file,
+			//					dataType: "json",
+			//					processData: false,
+			//					contentType: false,
+			//					xhrFields: {
+			//						withCredentials: true
+			//					},
+			//					success: function(res) {
+			//						console.log(res.data.url)
+			//						if(res.code == 0) {
+			//							$('#aaa').attr("src", res.data.url)
+			//						}
+			//
+			//						//						if(res.code == 0) {
+			//						//							that.todos.push({
+			//						//								img: res.data.url
+			//						//							})
+			//						//						}
+			//					},
+			//					error: function(res) {
+			//
+			//					}
+			//				});
+			//			}
+		</script>
+	</body>
+
+</html>

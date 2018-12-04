@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<meta http-equiv="X-UA-Compatible" content="ie=edge" />
+		<title>Document</title>
+	</head>
+
+	<body>
+		<script type="text/javascript">
+			document.addEventListener('plusready', function() {
+				plus.runtime.setBadgeNumber(0);
+				plus.push.setAutoNotification(true);
+				//监听推送消息接收
+				plus.push.addEventListener('receive', function(msg) {
+					try {
+						if(plus.os.name != "iOS") return;
+
+						if(msg.payload && msg.payload.url) {
+							mui.confirm(msg.content, msg.title, ['立即查看', '知道了'], function(e) {
+								if(e.index > 0) return;
+								redirect(msg.payload.url);
+							});
+						} else {
+							mui.alert(msg.content, msg.title);
+						}
+					} catch(e) {
+						malert(e.message);
+					}
+				});
+				//监听点击推送事件
+				plus.push.addEventListener('click', function(msg) {
+					try {
+						if(plus.os.name == "iOS") {
+							var data = eval('(' + msg.payload.payload + ')');
+						} else {
+							var data = eval('(' + msg.payload + ')');
+						}
+						pushCallback(data);
+					} catch(e) {
+						malert(e.message);
+					}
+				});
+			});
+
+			//推送执行方法
+			function pushCallback(data) {
+				try {
+					alert(data.type);
+					if(data.type == 'openWindow') {
+						data.url && redirect(data.url);
+					}
+
+				} catch(e) {
+					alert(e.message);
+				}
+			}
+		</script>
+	</body>
+
+</html>

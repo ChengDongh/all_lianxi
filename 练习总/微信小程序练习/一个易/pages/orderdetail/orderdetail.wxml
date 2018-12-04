@@ -1,0 +1,150 @@
+<view class="kbgcolor">
+  <view class='state'>
+    <view class='state1'>
+      <image src="../../resource/image/waitbuy.png" mode="scaleToFill" class='orderimg' wx:if="{{product.state !=15 && product.state != 16 && product.state != 19}}"></image>
+      <image src="../../resource/image/cancel.png" wx:else mode="scaleToFill" class='orderimg'></image>
+      <view class='state1text' wx:if="{{product.state == 1 }}">
+        <text>等待买家付款</text>
+        <text>请于{{time.minute}}分{{time.second}}秒内付款，超时订单自动关闭</text>
+      </view>
+      <view wx:else class='state1text'>
+        <text>{{order_state}}</text>
+      </view>
+    </view>
+    <view class='state2' wx:if="{{product.state!=15 && product.state!=16 && product.state!=19}}">
+      <view class='statename'>
+        <text>买家付款</text>
+        <text>商家发货</text>
+        <text>交易完成</text>
+      </view>
+      <view class='stateimg'>
+        <view class='stateimg1 ' wx:if="{{state==-1}}"></view>
+        <icon wx:if="{{state>=0}}" type='success' size='15'></icon>
+        <view class='stateimg2 ' wx:if="{{state<=0}}"></view>
+        <icon wx:if="{{state>=1}}" class='stateimg3' type='success' size='15'></icon>
+        <view class='stateimg2' wx:if="{{state<=1}}"></view>
+        <icon wx:if="{{state>=2}}" class='stateimg3' type='success' size='15'></icon>
+      </view>
+    </view>
+  </view>
+  <view class="colorline">
+    <image src="../../resource/image/colorline.png"></image>
+  </view>
+
+  <view class='address-infor'>
+    <view class="address address-receive">
+      <view class="address-choose">
+        <image class="order-icon" src="/resource/image/recive.png"></image>
+        <view >
+          <text class="font_14 klinecolor address-choose-text address-choose-name">收件人:{{currentExpress.name}}</text>
+          <text class="font_14 klinecolor address-choose-text">收货地址:{{currentExpress.province}}{{currentExpress.city}}{{currentExpress.area}}{{currentExpress.location}}</text>
+        </view>
+      </view>
+      <image class="order-right-icon" src="/resource/image/icon_right_more.png"></image>
+    </view>
+  </view>
+  <view class="cart_product" id='info' wx:for="{{product.order_detail}}" wx:key="{{item.id}}">
+    <view class='cart_product_name'>
+      <image class="cart_product_img" src="{{item.image}}"></image>
+      <view class="cart_product_info">
+        <view class="cart_product_title">
+          <text>{{item.product_name}}</text>
+          <text> ￥{{item.price}}</text>
+        </view>
+        <view class='cart_product_num'>
+          <view class='cart_product_sku'>
+            <text>{{item.param1}}</text>
+            <text>{{item.param2}}</text>
+          </view>
+          <view class='cart_product_title shopnum'>
+            X{{item.quantity}}
+          </view>
+        </view>
+        <!-- <view class='refund' wx:if="{{product.state==4}}">
+            <button plain type='default' data-order="{{item}}" catchtap='evaluate' class='refundbtn'>评价</button>
+          </view> -->
+        <view class='refund' wx:if="{{product.state==4 || product.state==5}}">
+          <button plain type='default' catchtap='refundorder' data-order="{{item}}" class='refundbtn'>申请退款</button>
+        </view>
+      </view>
+    </view>
+  </view>
+  <view class="order-info">
+    <view class="discount message" wx:if="{{product.state !=5 && product.state !=10 && product.state!=12}}">
+      <text>留言</text>
+      <input type='text' placeholder='' value='{{product.user_note}}' disabled></input>
+    </view>
+    <view class="discount borderline">
+      <text>合计</text>
+      <text class='total'>￥{{product.product_price}}</text>
+    </view>
+    <view class="discount borderline" wx:if="{{product.state !=5 && product.state !=10 && product.state!=12}}">
+      <text>优惠</text>
+      <view>
+        <text wx:if='{{ticket}}' class='ticket'>
+         <text>{{ticket.title?ticket.title:'优惠券'}}
+         </text>
+        <text>满{{ticket.min_price}}元立减{{ticket.price}}
+         </text>
+        </text>
+        <text wx:else>未使用优惠券</text>
+        <image src="../../resource/image/icon_right_more.png" class='icon_right_more'></image>
+      </view>
+    </view>
+    <view class="discount borderline" wx:if="{{product.state !=5 && product.state !=10 && product.state!=12}}">
+      <text>短信通知收件人</text>
+      <switch checked="{{product.notify_flag=='1'?true:false}}" disabled="true"></switch>
+    </view>
+    <view class="orderlist borderline" wx:if="{{product.state !=5 && product.state !=10 && product.state!=12}}">
+      <view>
+        <text>商品金额</text>
+        <text>￥{{product.product_price}}</text>
+      </view>
+      <view>
+        <text>优惠</text>
+        <text>￥{{product.hongbao_price}}</text>
+      </view>
+      <view>
+        <text>运费</text>
+        <text>￥{{product.delivery_price}}</text>
+      </view>
+      <!-- <text class='expresstip'>(此单包含到付订单，收货时需另外支付到付邮费)</text> -->
+    </view>
+    <view class='ordernum borderline'>
+      <text>订单编号：{{product.order_md5}}</text>
+      <text>创建时间：{{product.create_time}}</text>
+    </view>
+    <view class='btnlist' wx:if="{{product.state!=1 && product.state!=15 && product.state!=16 && product.state!=19}}">
+      <button plain type='default' bindtap='extendgoods' class='default' wx:if="{{product.state==5}}">延长收货</button>
+      <button plain type='default' class='default' wx:if="{{product.state==5}}">物流</button>
+      <button plain type='default' data-order="{{product}}" bindtap='againorder' class='default'>再来一单</button>
+      <button plain type='default' class='sure' bindtap='collectgoods' wx:if="{{product.state==5}}">确认收货</button>
+      <button plain type='default' bindtap='evaluate' class='default' wx:if="{{product.state==10}}">评价</button>
+    </view>
+  </view>
+  <view class="order-footer" wx:if="{{product.state==1}}">
+    <view class="sum-fee-info">
+      <text class="font_14 ktitlecolor">合计</text>
+      <text class='font_14 total '>￥{{product.pay_price}}</text>
+    </view>
+    <button class="summit" bindtap="orderTap">微信支付</button>
+  </view>
+  <view wx:if="{{isShow}}" class="service-mask" bindtap="pickerHide"></view>
+  <view wx:if="{{isShow}}" class="bottom-picker">
+    <view class="savePicker">
+      <label class="savePicker-left-button" bindtap="selectCity">取消</label>
+      <label class="savePicker-right-button" bindtap="saveCity">确定</label>
+    </view>
+    <picker-view indicator-style="height:40rpx;" style="width:100%; height:500rpx;" value="{{index}}" bindchange="bindChange">
+      <picker-view-column>
+        <view wx:for="{{provinces}}" wx:key="{{item.id}}" style="line-height: 40rpx">{{item.province}}</view>
+      </picker-view-column>
+      <picker-view-column>
+        <view wx:for="{{citys}}" wx:key="{{item.id}}" style="line-height: 40rpx">{{item.city}}</view>
+      </picker-view-column>
+      <picker-view-column>
+        <view wx:for="{{districts}}" wx:key="{{item.id}}" style="line-height: 40rpx">{{item.area}}</view>
+      </picker-view-column>
+    </picker-view>
+  </view>
+</view>

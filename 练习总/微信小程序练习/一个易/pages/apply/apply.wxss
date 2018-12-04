@@ -1,0 +1,103 @@
+.content {
+  text-align: center;
+}
+.toptip {
+  text-align: left;
+  width: 100%;
+   height: 44rpx;
+  line-height: 44rpx;
+}
+
+.input-area {
+  margin-top: 12rpx;
+  background-color: #fff;
+  text-align: left;
+  padding-left: 24rpx;
+  border-bottom: 1px solid #e0e0e0;
+  border-top: 1px solid #e0e0e0;
+}
+
+.input-area input {
+  height: 100rpx;
+  line-height: 100rpx;
+  font-size: 32rpx;
+  color: #353535;
+}
+
+#mobile {
+  border-bottom: 1px solid #e0e0e0;
+}
+
+#inviteCode {
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.smsCode {
+  display: flex;
+  justify-content: space-between;
+  padding-right: 24rpx;
+}
+
+.smsCode {
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.smsCode input {
+  width: 336rpx;
+}
+
+.getSmsCodeBtn {
+  font-size: 30rpx;
+  color: #fff;
+  width: 216rpx;
+  box-sizing: border-box;
+  height: 80rpx;
+  line-height: 80rpx;
+  margin-top: 10rpx;
+  margin-right: 0;
+}
+
+.btn-area {
+  padding: 40rpx 24rpx;
+}
+
+.btn-area button {
+  color: #fff;
+}
+
+.register {
+  color: #f3244b;
+  font-size: 30rpx;
+  float: right;
+  margin-top: 32rpx;
+}
+
+.register:active {
+  opacity: 0.7;
+}
+
+.server-vip {
+  padding-top: 120rpx;
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.server-vip-title {
+  width: 100%;
+  line-height: 30rpx;
+  text-align: center;
+  margin-bottom: 40rpx;
+}
+
+.wechat_code {
+  width: 224rpx;
+  height: 224rpx;
+  margin-bottom: 40rpx;
+}
+
+.server-vip-code {
+  display: inline-flex;
+  flex-direction: row;
+}

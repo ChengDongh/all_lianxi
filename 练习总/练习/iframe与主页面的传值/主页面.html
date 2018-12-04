@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>主页面</title>
+    <style type="text/css">
+    	.aaaa{
+    		display: none;
+    	}
+    </style>
+    <script type="text/javascript" src="../jquery.js"></script>
+    <script type="text/javascript">
+        function showSubValue(){
+			console.log(window.frames[0].document.getElementById("subdiv1"))
+			console.log(window.frames[1].document.getElementById("subdiv2"))
+            window.frames[1].document.getElementById("subdiv2").innerHTML = "改变之后的子页面2数据";
+            window.frames[0].document.getElementById("subdiv1").innerHTML = "改变之后的子页面数据";
+            console.log($('#iframe'))
+            if(window.frames[1].document.getElementById("subdiv2").getAttribute("flag") == 12){
+            	window.frames[1].document.getElementById("subdiv2").style.color = "red"
+            	$('#iframe2').show()
+            }
+            if(window.frames[0].document.getElementById("subdiv1").getAttribute("flag") == 123){
+            	window.frames[0].document.getElementById("subdiv1").style.color = "orange"
+            	$('#iframe').show()
+            }
+        }
+//      function btn(value){
+//      	$('.aaaa').show()
+//      	$(".aaaa").attr('id',value)
+//      }
+    </script>
+</head>
+<body>
+<div id="mainDiv">主页面测试数据</div>
+<input type="button" value="查看子页面数据" onclick="showSubValue();"/>
+<iframe id="iframe" src="子页面.html" width="300" height="100"></iframe>
+<iframe id="iframe2" src="子页面2.html" width="300" height="300"></iframe>
+<!--<iframe src="子页面.html" width="300" height="100" class="aaaa"></iframe>
+<button onclick="btn('1')">打开iframe1</button>
+<button onclick="btn('2')">打开iframe2</button>-->
+</body>
+</html>

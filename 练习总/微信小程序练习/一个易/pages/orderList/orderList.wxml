@@ -1,0 +1,56 @@
+<view>
+  <view class="head">
+    <view wx:for="{{orders}}" wx:key="id" class="menu font_14 {{item.selected}}" data-id="{{item.id}}" bindtap="doAction">
+      <text>{{item.title}}</text>
+    </view>
+  </view>
+  <view class="title-box" wx:if="{{currentOrder.orders.length==0}}">
+    空空如也～
+  </view>
+  <view class='body'>
+    <view wx:for="{{currentOrder.orders}}" wx:key="index" wx:for-item="item" class="order" data-id="{{item.id}}">
+      <navigator url='/pages/orderdetail/orderdetail?orderid={{item.id}}'>
+        <view class="order-top">
+          <view class="order-time font_15 ksubtitlecolor">
+            <text>一个易商店</text>
+            <text>订单编号:{{item.order_md5}}</text>
+          </view>
+          <!-- <view  class="order-time font_15 ksubtitlecolor">订单编号:{{item.ordernumber}}</view> -->
+          <view class="order-state">{{item.statename}}</view>
+        </view>
+        <!-- <view class="order-adress">
+      <view class="order-adress-name font_14 ksubtitlecolor">{{item.addressInfo.real_name}} {{item.addressInfo.mobile}} </view>
+      <view class="order-adress-entire font_14 ksubtitlecolor">{{item.addressInfo.entire_address}} </view>
+    </view> -->
+        <view class="order-product">
+          <view wx:for="{{item.order_detail}}" wx:key="id" wx:for-item="sku" wx:for-index="idx" class="order-sku {{idx == (item.order_detail.length-1) ? '' : 'order-bottom'}}">
+            <image src="{{sku.image}}"></image>
+            <view class="order-sku-title-view">
+              <text class="font_14 ktitlecolor">{{sku.product_name}}</text>
+              <text class="font_14 ktitlecolor order-skus">{{sku.param1}}  {{sku.param2}}</text>
+              <!-- <text class="order-sku-title-view-style font_12 kSubTitleColor"></text> -->
+            </view>
+            <view class="order-sku-price-view">
+              <text class="order-sku-price font_14 ktitlecolor">¥{{sku.price}}</text>
+              <text class="order-sku-count font_14 kSubTitleColor">x{{sku.quantity}}</text>
+            </view>
+          </view>
+        </view>
+        <view class="order-expres-view">
+          <view class="order-expres-center font_14 ktitlecolor">合计:</view>
+          <view class="order-expres-right font_14 kredcolor">¥{{item.pay_price}} </view>
+        </view>
+      </navigator>
+      <view class="order-op">
+        <button wx:if="{{item.state==1}}" plain='true' class="order-right" data-order="{{item}}" data-state="{{item.state}}" data-index="{{index}}" catchtap="orderTap">确认付款</button>
+        <button class="order-center" wx:if="{{item.state==1}}" data-state="{{item.state}}" data-order="{{item}}" catchtap="cancelorder" data-index="{{index}}">取消订单</button>
+        <button class="order-center" wx:if="{{item.state==5}}" data-state="{{item.state}}" data-order="{{item}}" catchtap="collectgoods" data-index="{{index}}">确认收货</button>
+        <button class="order-center" wx:if="{{item.state==5}}" data-state="{{item.state}}" data-order="{{item}}" catchtap="extendgoods" data-index="{{index}}">延长收货</button>
+        <button class="order-center" wx:if="{{item.state==5|| item.state==10||item.state==12}}" data-state="{{item.state}}" data-order="{{item}}" catchtap="logistics" data-index="{{index}}">物流</button>
+        <button class="order-center" wx:if="{{item.state==10}}" data-state="{{item.state}}" data-order="{{item}}" catchtap="evaluate" data-index="{{index}}">评价</button>
+        <button class="order-center" data-state="{{item.state}}" data-order="{{item}}" catchtap="againorder" data-index="{{index}}">再来一单</button>
+        <!-- <button wx:if="{{item.statename=='已支付' || item.statename=='已发货'}}" data-state="{{item.state}}" data-order="{{item}}" catchtap='refundorder' data-index="{{index}}">申请退款</button> -->
+      </view>
+    </view>
+  </view>
+</view>

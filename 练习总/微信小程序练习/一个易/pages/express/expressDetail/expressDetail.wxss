@@ -1,0 +1,166 @@
+page view {
+  overflow: hidden;
+}
+
+.head-label {
+  width: 710rpx;
+  margin-left: 20rpx;
+  line-height: 60rpx;
+}
+
+.address {
+  padding-left: 20rpx;
+  border-bottom: 1rpx solid #e0e0e0;
+  display: inline-flex;
+  flex-direction: row;
+  width: 100%;
+  background-color: white;
+  height: 88rpx;
+}
+
+.address input {
+  width: 618rpx;
+  height: 88rpx;
+  line-height: 88rpx;
+}
+
+.address-auto {
+  width: 90rpx;
+  margin: 30rpx 10rpx 30rpx 0;
+  color: #f3244b;
+  font-size: 20rpx;
+  padding: 2rpx;
+  border: 1rpx solid #f3244b;
+  border-radius: 4rpx;
+}
+
+.express {
+  width: 100%;
+  background-color: white;
+  border-bottom: 1rpx solid #ccc;
+}
+
+.express text {
+  float: left;
+  margin-left: 20rpx;
+  line-height: 98rpx;
+  width: 64rpx;
+}
+
+.express label {
+  float: left;
+  margin-left: 20rpx;
+  width: 626rpx;
+  line-height: 98rpx;
+}
+
+.express input {
+  float: left;
+  width: 626rpx;
+  margin-left: 20rpx;
+  height: 98rpx;
+}
+
+.express-picker {
+  height: 98rpx;
+  width: 100%;
+  background-color: white;
+  border-bottom: 1rpx solid #ccc;
+}
+
+.bottom-picker {
+  left: 0rpx;
+  bottom: 0rpx;
+  width: 100%;
+  position: fixed;
+  z-index: 3;
+}
+picker-view{
+  background: white;
+}
+picker-view picker-view-column{
+   text-align: center;
+}
+
+.bottom {
+  left: 0rpx;
+  bottom: 0rpx;
+  width: 100%;
+  position: fixed;
+}
+
+.bottom button {
+  color: white;
+  background-color: #FC911D;
+  font-size: 28rpx;
+  line-height: 88rpx;
+  border-radius: 0rpx;
+  width: 100%;
+}
+
+.savePicker {
+  width: 100%;
+  background: white;
+  height: 80rpx;
+}
+
+.savePicker label {
+  height: 80rpx;
+  line-height: 80rpx;
+  width: 130rpx;
+  color: #666;
+  font-size: 26rpx;
+  text-align: center;
+  background-color: white;
+}
+
+.savePicker-left-button {
+  float: left;
+}
+
+.savePicker-right-button {
+  float: right;
+}
+
+.service-mask {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 2;
+  background: #000;
+  opacity: 0.5;
+}
+
+.id-view {
+  width: 100%;
+  height: 98rpx;
+  margin-top: 20rpx;
+  background-color: white;
+}
+
+.id-view image {
+  margin-left: 20rpx;
+  margin-top: 25rpx;
+  width: 48rpx;
+  height: 48rpx;
+  float: left;
+}
+
+.id-view label {
+  float: left;
+  margin-top: 0rpx;
+  margin-left: 20rpx;
+  height: 98rpx;
+  line-height: 98rpx;
+}
+
+.id-view text {
+  float: left;
+  margin-top: 0rpx;
+  margin-left: 20rpx;
+  height: 98rpx;
+  line-height: 98rpx;
+  width: 160rpx;
+}

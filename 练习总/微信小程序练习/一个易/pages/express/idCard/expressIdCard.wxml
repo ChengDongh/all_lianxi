@@ -1,0 +1,12 @@
+<view>
+  <view class="head font_14 kcontentcolor">注:身份证照片仅用于海外直邮商品办理海关入境清关手续,请确保照片清晰。卡美啦将严格保证您的信息安全,绝不外泄!</view>
+  <image class="image" src="{{currentExpress.negative_card_url ? currentExpress.negative_card_url : 'http://image.aidaojiacdn.com/4280683bc4db3cc449f2671393d59733_605x380.png'}}" data-id="1" bindtap="selectImg"></image>
+  <image class="image" src="{{currentExpress.positive_card_url ? currentExpress.positive_card_url : 'http://image.aidaojiacdn.com/204159c054def76ebd0ce5329d8f6a95_604x380.png'}}" data-id="2" bindtap="selectImg"></image>
+  <input class="input font_15" placeholder="请输入姓名" value="{{currentExpress.id_name}}" bindinput="inputName" />
+  <input class="input font_15" placeholder="请输入身份证号" value="{{currentExpress.id_card}}" type="idcard" bindinput="inputIdCard" />
+  <view class="bottomView font_12 kredcolor">※身份证上的姓名须与收件人姓名保持一致</view>
+  <view class="mask"></view>
+  <view class="bottom">
+    <button bindtap="save">提交</button>
+  </view>
+</view>

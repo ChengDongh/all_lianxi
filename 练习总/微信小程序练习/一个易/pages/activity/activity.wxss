@@ -1,0 +1,11 @@
+.banner {
+    width: 100%;
+}
+
+.module {
+    width: 100%;
+}
+
+@import "/pages/component/product_table.wxss";
+
+

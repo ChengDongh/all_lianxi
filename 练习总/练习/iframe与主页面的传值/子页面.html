@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+
+	<head>
+		<meta charset="UTF-8">
+		<script type="text/javascript" src="../jquery.js"></script>
+		<title>子页面</title>
+		<script type="text/javascript">
+			function showMainValue() {
+				//dom方式
+				window.parent.document.getElementById("mainDiv").innerHTML = "修改后的主页面数据";
+				window.parent.document.getElementById("iframe").style.display = 'none'
+			}
+		</script>
+	</head>
+
+	<body>
+		<div id="subdiv1" flag='123'>子页面测试数据</div>
+		<input type="button" id="zhe" value="显示父页面数据" onclick="showMainValue();" />
+	</body>
+
+</html>

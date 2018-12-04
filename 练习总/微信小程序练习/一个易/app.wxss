@@ -1,0 +1,54 @@
+/**app.wxss**/
+@import "resource/wxss/color_font.wxss";
+page {
+  height: 100%;
+  background-color: #FAFAFA;
+}
+.container {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  padding: 200rpx 0;
+  box-sizing: border-box;
+}
+.parent {
+    background-color: #fff;
+    height: 100%;
+}
+
+.flex{
+    display: flex;
+}
+
+.column{
+    flex-direction: column;
+}
+.row{
+    flex-direction: row;
+}
+
+.arrows{
+    position: relative;
+}
+.arrows:after{
+    position: absolute;
+    right:15px;
+    top:50%;
+    margin-top:-3px;
+    content: "";
+    display: inline-block;
+    -webkit-transform: rotate(45deg);
+    transform: rotate(45deg);
+    height: 8px;
+    width: 8px;
+    border-width: 2px 2px 0 0;
+    border-color: #c8c8cd;
+    border-style: solid;
+    margin-left: .3em;
+}
+
+.bottom_sep{
+    border-bottom: 12rpx solid #eee;
+}

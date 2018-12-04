@@ -1,0 +1,5 @@
+<view>
+    <view class="sender arrows" wx:for="{{senders}}" bindtap="select" data-sender="{{item.name}}" wx:key="id">
+        <text>{{item.name}}</text>
+    </view>
+</view>

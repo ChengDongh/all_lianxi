@@ -1,0 +1,134 @@
+page view {
+  overflow: hidden;
+}
+
+.head {
+  width: 100%;
+  background-color: white;
+  flex-direction: row;
+  display: inline-flex;
+  padding: 20rpx;
+}
+
+.head-left-imag {
+  float: left;
+  width: 68rpx;
+  height: 98rpx;
+}
+
+.head-view {
+  width: 620rpx;
+  margin-left: 20rpx;
+  float: left;
+  flex-direction: column;
+  display: inline-flex;
+}
+
+.head-mobile-view {
+  width: 620rpx;
+  flex-direction: row;
+  display: inline-flex;
+}
+
+.head-mobile-view-margin {
+  padding-top: 20rpx;
+}
+
+.head-mobile-view text {
+  line-height: 48rpx;
+  padding-left: 10rpx;
+}
+
+.head-mobile-view image {
+  margin-top: 4rpx;
+  margin-left: 20rpx;
+  width: 108rpx;
+  height: 36rpx;
+}
+
+.gold-pic {
+  width: 100%;
+  height: 220rpx;
+  margin-top: 20rpx;
+}
+
+.level-setting {
+  width: 100%;
+  background: white;
+  margin-top: 20rpx;
+}
+
+.level-setting-view {
+  width: 100%;
+  background: white;
+  border-bottom: 1rpx solid #ccc;
+  display: flex;
+  flex-direction: row;
+}
+
+.level-setting-view-title {
+  margin-left: 20rpx;
+  line-height: 140rpx;
+  height: 140rpx;
+}
+
+.level-tag {
+  margin-top: 20rpx;
+  padding: 4rpx;
+  border-top-left-radius: 14rpx;
+  border-top-right-radius: 14rpx;
+  border-bottom-right-radius: 14rpx;
+  background-color: #f3244b;
+  line-height: 28rpx;
+  height: 28rpx;
+}
+.level-old-money{
+  margin-left: 10rpx;
+  line-height: 140rpx;
+  height: 140rpx;
+  text-decoration:line-through;
+}
+.level-money{
+  margin-left: 20rpx;
+  line-height: 140rpx;
+  height: 140rpx;
+}
+.level-button {
+  background-color:#f3244b;
+  width: 120rpx;
+  height: 60rpx;
+  float: right;
+  margin-right: 20rpx;
+  margin-top: 40rpx; 
+   color: white;
+  font-size: 30rpx;
+  line-height: 60rpx;
+}
+.level-other {
+  background-color: white;
+  margin-top: 20rpx;
+  width: 100%;
+  height: 100rpx;
+  line-height: 100rpx;
+  text-align: center;
+}
+.level-bottom-view{
+   background-color: white;
+   width: 100%;
+}
+.level-other-view{
+   background-color: white;
+   width: 100%;
+   display: flex;
+  flex-direction: column;
+}
+.level-other-view text {
+   margin:10rpx 20rpx 10rpx 20rpx;
+}
+.bottom-view{
+   background-color: white;
+   width: 100%;
+   height: 120rpx;
+   line-height: 120rpx;
+   padding-left: 20rpx;
+}

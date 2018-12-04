@@ -1,0 +1,81 @@
+/**红色*/
+
+.kredcolor {
+  color: #f3244b;
+}
+
+/**主标题颜色*/
+
+.ktitlecolor {
+  color: #353535;
+}
+
+/**正文颜色*/
+
+.kcontentcolor {
+  color: #666;
+}
+
+/**辅助标题颜色*/
+
+.ksubtitlecolor {
+  color: #999;
+}
+
+/**割线颜色*/
+
+.klinecolor {
+  color: #ccc;
+}
+
+/**背景颜色*/
+
+.kbgcolor {
+  color: #eee;
+}
+
+.kwhitecolor {
+  color: white;
+}
+.font_11 {
+  font-size: 22rpx; 
+}
+.font_12 {
+  font-size: 24rpx; 
+}
+.font_13 {
+  font-size: 26rpx; 
+}
+.font_14 {
+  font-size: 28rpx; 
+}
+.font_15 {
+  font-size: 30rpx; 
+}
+.font_16 {
+  font-size: 32rpx; 
+}
+.font_17 {
+  font-size: 34rpx; 
+}
+.font_18 {
+  font-size: 36rpx; 
+}
+.font_19 {
+  font-size: 38rpx; 
+}
+.font_20 {
+  font-size: 40rpx; 
+}
+.font_21 {
+  font-size: 42rpx; 
+}
+.font_22 {
+  font-size: 44rpx; 
+}
+.font_23 {
+  font-size: 46rpx; 
+}
+.font_24 {
+  font-size: 48rpx; 
+}

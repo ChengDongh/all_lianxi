@@ -1,0 +1,14 @@
+<!-- category_products.wxml -->
+<import src="../component/product_table.wxml" />
+
+<view>
+    <scroll-view class="brands" scroll-x="true">
+        <view wx:for="{{ brands }}" wx:key="id" class="brand_item">
+            <navigator url="/pages/brand/brand?id={{ item.id }}" hover-class="navigator-hover" class="brand_item_btn">
+                <image src="{{ item.logo }}" class="brand_logo"></image>
+                <text class="ktitlecolor font_12 brand_name">{{ item.title }}</text>
+            </navigator>
+        </view>
+    </scroll-view>
+    <template is="product_table" data="{{ products }}" />
+</view>

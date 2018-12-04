@@ -1,0 +1,50 @@
+page {
+  height: 100%;
+  background-color: white;
+}
+
+.appinfo {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.appinfo-logo {
+  width: 160rpx;
+  height: 160rpx;
+  margin: 20rpx;
+  border-radius: 50%;
+}
+
+.appinfo-text {
+  color: #f3244b;
+  font-size: 28rpx;
+}
+
+.bottom {
+  flex-direction: column;
+}
+
+.opration {
+  margin-top: 60rpx;
+}
+
+.bind-btn {
+  border: 1px solid #f3244b;
+  color: #f3244b;
+  background-color: #fff;
+  margin-bottom: 20rpx;
+}
+
+.regist-btn {
+  background-color: #f3244b;
+  color: #fff;
+}
+
+.market {
+  height: 200rpx;
+}
+
+.server_mobile {
+  height: 30rpx;
+}

@@ -1,0 +1,99 @@
+<view>
+  <!-- <view class="header header-image{{user.user_level}}"> -->
+  <view class="header">
+    <image mode="scaleToFill" class='header-banner' src="../../resource/image/mybanner.png"></image>
+    <!-- <text wx:if="{{user.user_level==1}}" class="title font_24">初级会员</text>
+    <text wx:else class="title font_24">金牌会员</text> -->
+    <view class='head-name'>
+      <view class="userimg">
+        <open-data type="userAvatarUrl"></open-data>
+      </view>
+      <!-- <image src="../../resource/image/headimg.png"></image> -->
+      <open-data class="title-mobile font_12" type="userNickName"></open-data>
+      <!-- <text >甄美丽{{user.mobile}}</text> -->
+    </view>
+    <!-- <view class="level" bindtap="upgrade"> -->
+    <!-- <view class="level-time" ></view>
+    <image wx:if="{{user.user_level==1}}" class="level-image" src="http://image.aidaojiacdn.com/54d7ede3cfce5a4abf2513df2b9b2d7f_34x48.png"></image>
+    <image wx:else class="level-image" src="http://image.aidaojiacdn.com/968240392a0ba6dc11e74c652520e0e7_34x49.png"></image> -->
+    <!-- <text wx:if="{{user.user_level < 4}}" class="time-title font_16">开通金牌会员</text>
+    <text wx:else class="time-title font_16">有效期至：{{user.user_expire_day}} </text>
+    <image src="/resource/image/white_back.png" class="access"></image> -->
+    <!-- </view> -->
+  </view>
+
+  <view class='mybody'>
+    <navigator url="/pages/orderList/orderList">
+      <view class='mylist'>
+        <view class='mylisttitle'>
+          <image class='mylisticon' src="../../resource/image/myorder.png"></image>
+          <text>我的订单</text>
+        </view>
+        <image class='righticon' src="../../resource/image/icon_right_more.png"></image>
+      </view>
+    </navigator>
+    <navigator url='/pages/favorite/favorite'>
+    <view class='mylist'>
+      <view class='mylisttitle'>
+        <image class='mylisticon' src="../../resource/image/mycollection.png"></image>
+        <text>我的收藏</text>
+      </view>
+      <image class='righticon' src="../../resource/image/icon_right_more.png"></image>
+    </view>
+    </navigator>
+    <navigator url="/pages/coupon/coupon">
+      <view class='mylist'>
+        <view class='mylisttitle'>
+          <image class='mylisticon' src="../../resource/image/mycoupon.png"></image>
+          <text>优惠券</text>
+        </view>
+        <image class='righticon' src="../../resource/image/icon_right_more.png"></image>
+      </view>
+    </navigator>
+    <navigator url="/pages/express/express">
+      <view class='mylist'>
+        <view class='mylisttitle'>
+          <image class='mylisticon' src="../../resource/image/myaddress.png"></image>
+          <text>收货地址</text>
+        </view>
+        <image class='righticon' src="../../resource/image/icon_right_more.png"></image>
+      </view>
+    </navigator>
+    <navigator url="/pages/feedback/feedback">
+      <view class='mylist'>
+        <view class='mylisttitle'>
+          <image class='mylisticon' src="../../resource/image/myfeedback.png"></image>
+          <text>意见反馈</text>
+        </view>
+        <image class='righticon' src="../../resource/image/icon_right_more.png"></image>
+      </view>
+    </navigator>
+  </view>
+
+
+
+  <!-- <navigator url="/pages/order/orderList/orderList?id=3" class="all-order">
+    <text class="order all-order-title font_14">我的订单</text>
+    <text class="order all-my-order font_14">全部订单 ></text>
+  </navigator> -->
+  <!--<view class="op-order bottom_sep">
+    <view class="sup-order" bindtap="gotoOrders" data-id="0">
+      <view class="order-count font_14" >{{orderCount.waitPay}}</view>
+      <view class="order-title font_14">待付款</view>
+    </view>
+    <view class="sup-order" bindtap="gotoOrders" data-id="1">
+      <view class="order-count font_14">{{orderCount.waitDelivery}}</view>
+      <view class="order-title font_14">待发货</view>
+    </view>
+    <view class="sup-order" bindtap="gotoOrders" data-id="2">
+      <view class="order-count font_14">{{orderCount.waitDelivered}}</view>
+      <view class="order-title font_14">待收货</view>
+    </view>
+  </view>-->
+  <!-- <view wx:for="{{items}}" wx:key="{{items.id}}" wx:for-item="subitems" class="subitems bottom_sep">
+    <view wx:for="{{subitems}}" wx:key="title" class="action arrows" data-path="{{item.path}}" bindtap="doAction">
+      <image src="{{item.icon}}"></image>
+      <text>{{item.title}}</text>
+    </view>
+  </view> -->
+</view>

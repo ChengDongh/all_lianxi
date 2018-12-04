@@ -1,0 +1,141 @@
+/* pages/makemoney/makemoney.wxss */
+
+.put_forward {
+  height: 282rpx;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: relative;
+  margin-bottom: 20rpx;
+}
+
+.put_forward image {
+  position: absolute;
+  z-index: -1;
+  width: 100%;
+  height: 100%;
+}
+
+.put_forward_name {
+  margin-left: 20rpx;
+  height: 150rpx;
+  display: inline-flex;
+  justify-content: space-around;
+  flex-direction: column;
+}
+
+.put_forward_name text {
+  color: #fff;
+  font-size: 28rpx;
+}
+
+.put_forward_name .money {
+  font-size: 48rpx;
+  font-weight: bolder;
+}
+
+.put_forward_btn {
+  margin-right: 20rpx;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  height: 200rpx;
+}
+
+.put_forward_btn button {
+  border: 1rpx solid #fff;
+  font-size: 28rpx;
+  text-align: center;
+  color: #fff;
+  width: 122rpx;
+  height: 52rpx;
+  line-height: 52rpx;
+}
+
+.money_day_page {
+  background-color: white;
+  margin-bottom: 20rpx;
+}
+
+.money_day_pagelist {
+  border-bottom: 1rpx solid #e6e6e6;
+  height: 80rpx;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.money_day_pagelist text {
+  color: #999;
+  font-size: 28rpx;
+  line-height: 80rpx;
+}
+
+.money_day_pagelist .pagelist_active {
+  color: #fc911d;
+  border-bottom: 4rpx solid #fc911d;
+}
+
+.money_day_cont {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.money_day_cont view {
+  width: 33%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin: 16rpx 0rpx;
+}
+
+.money_day_cont view text {
+  text-align: center;
+  color: #1a1a1a;
+  font-size: 28rpx;
+  line-height: 45rpx;
+}
+.order_page_list{
+  border-bottom: 1rpx solid #E6E6E6;
+  padding: 20rpx;
+}
+.order_page_head{
+  display: flex;
+  justify-content: space-between
+}
+.order_page_head image{
+  width: 150rpx;
+  height: 150rpx;
+}
+.order_page_title{
+  font-size: 28rpx;
+  color: #1A1A1A;
+
+}
+.num{
+  color: #FC911D;
+  font-size: 28rpx;
+}
+.order_page_top{
+   width: 600rpx; 
+  padding-left: 20rpx;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+.order_page_top>view{
+  display: flex;
+  justify-content: space-between;
+}
+.commission{
+  color: #999999;
+  font-size: 24rpx;
+}
+.share{
+  padding: 5rpx 10rpx;
+  font-size: 24rpx;
+    color: white;
+    background-color: #9CDCFF;
+    border-radius: 17rpx;
+}

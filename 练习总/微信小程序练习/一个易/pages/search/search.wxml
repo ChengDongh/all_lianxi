@@ -1,0 +1,20 @@
+<import src="/wxSearch/wxSearch.wxml" />
+<view class="wxSearch-section">
+  <view class="wxSearch-pancel">
+    <input bindinput="wxSearchInput" bindfocus="wxSerchFocus" value="{{wxSearchData.value}}" bindblur="wxSearchBlur" class="wxSearch-input ktitlecolor font_14" placeholder="搜索品牌或商品" placeholder-class="klinecolor" focus='{{status}}' />
+    <button class="wxSearch-button" bindtap="wxSearchFn"  plain="true">搜索</button>
+  </view>
+</view>
+<template is="wxSearch" data="{{wxSearchData}}" />
+<view>
+  <!--<scroll-view class="brands" scroll-x="true">
+    <view wx:for="{{ brands }}" wx:key="id" class="brand_item">
+      <navigator url="/pages/brand/brand?id={{ item.id }}" hover-class="navigator-hover" class="brand_item_btn">
+        <image src="{{ item.logo }}" class="brand_logo"></image>
+        <text class="ktitlecolor font_12 brand_name">{{ item.title }}</text>
+      </navigator>
+    </view>
+  </scroll-view>-->
+  <import src="../component/product_table.wxml" />
+  <template is="product_table" data="{{products:products,type:1}}" />
+</view>

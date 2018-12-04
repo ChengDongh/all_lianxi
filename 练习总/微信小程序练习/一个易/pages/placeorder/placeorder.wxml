@@ -1,0 +1,217 @@
+<view class="kbgcolor">
+  <!-- <view class='state' wx:if="{{state!=-1}}">
+    <view class='state1'>
+      <image src="../../resource/image/waitbuy.png" mode="scaleToFill" class='orderimg'></image>
+      <view class='state1text'>
+        <text>等待买家付款</text>
+        <text>请于59分21秒内付款，超时订单自动关闭</text>
+      </view>
+    </view>
+    <view class='state2'>
+      <view class='statename'>
+        <text>买家付款</text>
+        <text>商家发货</text>
+        <text>交易完成</text>
+      </view>
+      <view class='stateimg'>
+        <view class='stateimg1 ' wx:if="{{state==-1}}"></view>
+        <icon wx:if="{{state>=0}}" type='success' size='15'></icon>
+        <view class='stateimg2 ' wx:if="{{state<=0}}"></view>
+        <icon wx:if="{{state>=1}}" class='stateimg3' type='success' size='15'></icon>
+        <view class='stateimg2' wx:if="{{state<=1}}"></view>
+        <icon wx:if="{{state>=2}}" class='stateimg3' type='success' size='15'></icon>
+      </view>
+    </view>
+  </view> -->
+  <view class="colorline">
+    <image src="../../resource/image/colorline.png"></image>
+  </view>
+  <view class='address-infor' wx:if="{{!addressInfo}}">
+    <view class='discount message'>
+      <text>收件人</text>
+      <input value='{{currentExpress.name}}' type='text' data-index="name" bindinput='addinfor' placeholder='请输入收件人的真实姓名'></input>
+    </view>
+    <view class='discount message'>
+      <text>手机号码</text>
+      <input value="{{currentExpress.mobile}}" data-index="mobile" type='text' bindinput='addinfor' placeholder='请输入11位手机号码'></input>
+    </view>
+    <view class='discount message'>
+      <text>地区选择</text>
+      <label bindtap='selectCity'>{{(currentExpress.province +currentExpress.city +currentExpress.area)?currentExpress.province + " " + currentExpress.city + " " + currentExpress.area : "请选择地区"}}</label>
+    </view>
+    <view class='discount message'>
+      <text>详细地址</text>
+      <input value='{{currentExpress.location}}' data-index="location" type='text' bindinput='addinfor' placeholder='街道门牌信息'></input>
+    </view>
+  </view>
+  <view class='saveaddress'>
+    <button type="default" bindtap='saveaddress' wx:if="{{!addressInfo}}">保存收货信息</button>
+  </view>
+
+
+
+
+  <view class='address-infor' wx:if="{{addressInfo}}">
+    <view class="address address-receive" bindtap="chooseAddress">
+      <view class="address-choose">
+        <image class="order-icon" src="/resource/image/recive.png"></image>
+        <view>
+          <text class="font_14 klinecolor address-choose-text address-choose-name">收件人:{{currentExpress.name}}</text>
+          <text class="font_14 klinecolor address-choose-text">收货地址:{{currentExpress.province}}{{currentExpress.city}}{{currentExpress.area}}{{currentExpress.location}}</text>
+        </view>
+      </view>
+      <!-- <view wx:else class="address-choose address-chooseed">
+        <text class="font_14 kcontentcolor">{{addressInfo.name + " " + addressInfo.mobile }}</text>
+        <text class="font_14 kcontentcolor address-choosed-text">{{addressInfo.entire_address}}</text>
+      </view> -->
+      <image class="order-right-icon" src="/resource/image/icon_right_more.png"></image>
+    </view>
+  </view>
+
+  <view class="cart_product" id='info' wx:for="{{product}}" wx:key="{{index}}">
+    <view class='cart_product_name'>
+      <image class="cart_product_img" src="{{item.image}}"></image>
+      <view class="cart_product_info">
+        <view class="cart_product_title">
+          <text>{{item.title}}</text>
+          <text> ￥{{item.sku.price}}</text>
+        </view>
+        <view class='cart_product_num'>
+          <view class='cart_product_sku'>
+            <text>{{item.sku.param1}}</text>
+            <text>{{item.sku.param2}}</text>
+          </view>
+          <view class='cart_product_title shopnum'>
+            X{{item.num}}
+          </view>
+        </view>
+        <!-- <view class="select-number">
+          <button type="default" disabled="{{quantity <= 1}}" bindtap="minus" data-sku="{{quantity}}" data-style="{{productStyleInfo}}">-</button>
+          <input type="number" value="{{ quantity }}" bindinput="inputQuantity" data-sku="{{quantity}}" data-style="{{productStyleInfo}}"/>
+          <button type="default" disabled="{{quantity >= item.available_inventory}}" bindtap="plus" data-sku="{{quantity}}" data-style="{{productStyleInfo}}">+</button>
+        </view>      -->
+      </view>
+    </view>
+  </view>
+  <view class="order-info">
+    <view wx:if="{{product.need_identity==2}}">
+      <view class="address address-sender">
+        <image class="order-icon" src="/resource/image/recive.png"></image>
+        <input id="sender" name="name" maxlength='5' placeholder="填写收件人的姓名（必填）" bindinput="nameChange" class="ktitlecolor font_15" placeholder-class="klinecolor" />
+        <!--<image class="order-right-icon" src="/resource/image/sender_avatar.png" bindtap="chooseSender"></image>-->
+      </view>
+      <view class="address address-sender">
+        <image class="order-icon" src="/resource/image/recive.png"></image>
+        <input id="sender" name="idCard" type='number' placeholder="填写收件人的身份证号（必填）" bindinput="idCardChange" class="ktitlecolor font_15" placeholder-class="klinecolor" />
+        <!--<image class="order-right-icon" src="/resource/image/sender_avatar.png" bindtap="chooseSender"></image>-->
+      </view>
+    </view>
+    <!--身份证-->
+    <!-- <view class="discount">
+      <text>配送方式</text>
+      <view class='posttype'>
+        <text>￥0.00</text>
+        <text>普通快递 </text>
+      </view>
+    </view> -->
+    <view class="discounts message">
+      <text>留言</text>
+      <textarea bindinput="message" auto-height="true" placeholder='点击给商家留言'></textarea>
+    </view>
+    <view class="discount borderline">
+      <text>合计</text>
+      <text class='total'>￥{{total}}</text>
+    </view>
+    <view class="discount borderline" bindtap='chooseCoupon'>
+      <text>优惠</text>
+      <view>
+        <text wx:if='{{ticket}}' class='ticket'>
+         <text>{{ticket.title?ticket.title:'优惠券'}}
+         </text>
+        <text>满{{ticket.min_price}}元立减{{ticket.price}}
+         </text>
+        </text>
+        <text wx:else>未选择</text>
+        <image src="../../resource/image/icon_right_more.png" class='icon_right_more'></image>
+      </view>
+    </view>
+    <view class="discount borderline">
+      <text>短信通知收件人</text>
+      <switch checked="{{checked}}" bindchange="checked"></switch>
+    </view>
+    <view class="orderlist borderline">
+      <view>
+        <text>商品金额</text>
+        <text>￥{{total}}</text>
+      </view>
+      <view>
+        <text>优惠</text>
+        <text wx:if="{{ticket}}">￥{{ticket.price}}</text>
+        <text wx:else>无</text>
+      </view>
+      <view>
+        <text>运费</text>
+        <!-- <text wx:if="{{max_freight}}">未计算</text> -->
+        <text>￥{{max_freight}}</text>
+      </view>
+      <text wx:if="{{expressmesg}}" class='expresstip'>{{expressmesg}}</text>
+    </view>
+    <!-- <view class='ordernum borderline'>
+      <text>订单编号：E20180627155536071100007</text>
+      <text>创建时间：2018 - 06 - 27 15：55：36</text>
+    </view> -->
+    <!--优惠券-->
+    <!-- <view class="order-skus">
+      <view wx:for="{{orderDetails}}" class="buy_number flex" data-sku="{{item}}" wx:key="id">
+        <view class="size-style">
+          <text class="ktitlecolor font_15 size-style-text">{{item.style_title}} {{item.size_title}}</text>
+          <view>
+            <text class="kredcolor font_12">￥{{item.current_level_price}} </text>
+            <text class="kcontentcolor font_12">库存：{{item.available_inventory}}</text>
+          </view>
+        </view>
+        <view class="select-number">
+          <button type="default" disabled="{{item.quantity <= 1}}" bindtap="minus" data-sku="{{item}}">-</button>
+          <input type="number" value="{{ item.quantity }}" bindinput="inputQuantity" data-sku="{{item}}" />
+          <button type="default" disabled="{{item.quantity >= item.available_inventory}}" bindtap="plus" data-sku="{{item}}">+</button>
+        </view>
+      </view>
+    </view> -->
+    <!-- <view class="order-fee"> -->
+    <!--<text class="font_14 kcontentcolor post-fee">运费:{{addressInfo.id ? (package_flag==='0' ? "包邮" : "￥"+postFee+"元") : '待计算'}}</text>-->
+    <!-- <text class="font_14 kcontentcolor post-fee">运费:{{product.package_flag==='0' ? "包邮" : (addressInfo.id ? "￥"+postFee+"元" : '待计算')}}</text>
+      <view class="sum-order-fee">
+        <text class="font_14 kredcolor" wx:if="{{canShowPostFee}}">￥{{totalPrice}}</text>
+        <text class="font_14 kredcolor" wx:else>￥{{totalPrice}}</text>
+        <text class="font_14 kcontentcolor">小计({{canShowPostFee ? "含运费" : "不含运费"}}):</text>
+      </view>
+    </view> -->
+  </view>
+  <view class="order-footer">
+    <view class="sum-fee-info">
+      <text class="font_14 ktitlecolor">合计</text>
+      <text class='font_14 total '>￥{{paymenttotal}}</text>
+    </view>
+    <button class="summit" bindtap="placeorder">微信支付</button>
+  </view>
+
+
+  <view wx:if="{{isShow}}" class="service-mask" bindtap="pickerHide"></view>
+  <view wx:if="{{isShow}}" class="bottom-picker">
+    <view class="savePicker">
+      <label class="savePicker-left-button" bindtap="selectCity">取消</label>
+      <label class="savePicker-right-button" bindtap="saveCity">确定</label>
+    </view>
+    <picker-view indicator-style="height:40rpx;" style="width:100%; height:500rpx;" value="{{index}}" bindchange="bindChange">
+      <picker-view-column>
+        <view wx:for="{{provinces}}" wx:key="{{item.id}}" style="line-height: 40rpx">{{item.province}}</view>
+      </picker-view-column>
+      <picker-view-column>
+        <view wx:for="{{citys}}" wx:key="{{item.id}}" style="line-height: 40rpx">{{item.city}}</view>
+      </picker-view-column>
+      <picker-view-column>
+        <view wx:for="{{districts}}" wx:key="{{item.id}}" style="line-height: 40rpx">{{item.area}}</view>
+      </picker-view-column>
+    </picker-view>
+  </view>
+</view>

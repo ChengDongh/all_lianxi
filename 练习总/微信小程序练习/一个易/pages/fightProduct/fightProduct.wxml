@@ -1,0 +1,38 @@
+<button class='coupon'  open-type='share'><!--wx:if='{{state}}'-->
+  <text class='couponText'>春风十里，不如优惠券送给朋友，点此转发！</text>
+</button>
+<view class='banner'>
+  <swiper class="swiper" bindchange="swiperchange" bindtap="tapImage" current="{{current}}">
+    <!--<swiper-item wx:for="{{}}" wx:key="id">-->
+    <swiper-item>
+      <navigator url="/pages/product/product?id={{product.id}}" open-type='redirect'>
+      <view class="swiperbitem" >
+      <image class="sliderbimg" mode="widthFix" src="{{ product.image }}"></image>
+      </view>
+    </navigator>
+    </swiper-item>
+    <!--</swiper-item>-->
+  </swiper>
+  <view class="productbname">
+    <!--<image class="countrybicon" mode="aspectFill" src="{{product.countryburl}}"> </image>-->
+    <text class="ktitlecolor fontb14" selectable>{{product.title}}</text>
+  </view>
+  <view class="productbprice">
+    <text class="productbpriceblabel">￥{{product.price}}</text>
+    <text wx:if='{{hongbao==1}}' class='hongbaoMsg productbpriceblabel'>您有该单品优惠券</text>
+    <!--<image wx:elif='{{hongbao==2 && state}}' bindtap='getHb' src='../../resource/image/ticket.png' mode='widthFix' class='hongbaoMsg productbpriceblabel'></image>-->
+    <text wx:if='{{hongbao==2}}' bindtap='getHb' class='hongbaoMsg productbpriceblabel image'>领取优惠券</text>
+  </view>
+  <view class="productbprice">
+    <text class="proposebpriceblabel">原价: <text class='price'>￥{{product.pre_price}}</text></text>
+    <text class="proposebpriceblabel">库存:{{product.inventory}}</text>
+  </view>
+</view>
+<!--单品展示-->
+<view class="product-op">
+    <button class="product-buy" bindtap="buyProduct">立即购买</button>
+</view>
+<view class="product-op">
+    <button class="product-buy" bindtap="more" style='height: 150rpx;'>查看更多精品↓</button>
+</view>
+<!--立即购买-->

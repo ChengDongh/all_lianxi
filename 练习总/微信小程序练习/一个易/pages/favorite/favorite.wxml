@@ -1,0 +1,32 @@
+<!--pages/favorite/favorite.wxml-->
+<view wx:if="{{favoritelist}}" class='favoritebox'>
+  <view class='all' wx:for="{{favoritelist}}" wx:key="{{index}}"  style="{{item.left}}"  data-index="{{index}}"  bind:touchstart="touchS"  bind:touchmove="touchM" bind:touchend="touchE" >
+    <view class='alllist'  >
+      <view class='favorite_head'>
+        <image src="../../resource/image/shop (2).png"></image>
+        <text>一个易商店</text>
+      </view>
+      <view class='favorite_body'>
+        <image src="{{item.spu.image}}" class='favorite_body_img'></image>
+        <view class='favorite_body_title'>
+          <view class='title_head'>
+            <text>{{item.spu.title}}</text>
+            <text>{{item.spu.favorite_number}}人收藏</text>
+          </view>
+          <view class='body_cz'>
+            <text>￥355.00</text>
+            <view>
+              <button plain catchtap='shopping' data-id="{{item.spu.id}}">立即下单</button>
+            </view>
+          </view>
+        </view>
+      </view>
+    </view>
+    <view class="delete-btn" data-index="{{index}}" catchtap="delItem">
+      删除
+    </view>
+  </view>
+</view>
+<view class="nofavorite" wx:else>
+  <text>您还没有收藏，快快选择喜爱的收藏吧~~</text>
+</view>

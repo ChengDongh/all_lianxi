@@ -1,0 +1,26 @@
+<template name="product_table">
+  <view class="product_list">
+    <view class="product_item" wx:for="{{ products }}" wx:key="{{products.id}}">
+      <navigator url="/pages/product/product?id={{item.id}}" open-type='{{type==1 ? "navigate" : "redirect" }}'>
+      <view class="product_img" >
+        <image mode="widthFix" src="{{item.image}}"></image>
+          </view>
+        <view class="product_info">
+          <view class="product_name">
+            <text class="product_title ">{{item.title}}</text>
+          </view>
+          <view class='product_spec'>
+           <text class=''>{{item.spec}}</text>
+          </view>
+          <view class="product_money">
+            <view>
+              <image src="../../resource/image/timepri.png" class='timepri'></image>
+            </view>
+            <text class="kredcolor">￥{{item.price}}</text>
+            <text class="pre">¥{{item.pre_price}}</text>
+          </view>
+        </view>
+      </navigator>
+    </view>
+  </view>
+</template>

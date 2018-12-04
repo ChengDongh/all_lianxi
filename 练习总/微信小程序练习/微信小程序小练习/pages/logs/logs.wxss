@@ -1,0 +1,18 @@
+.phone{
+  display: flex;
+  margin-top: 300rpx;
+  align-items: center;
+  justify-content: center;
+}
+.boda{
+  margin-top: 10rpx;
+  text-align: center;
+}
+.scanCode{
+  margin-top: 10rpx;
+  text-align: center;
+}
+.level{
+  display: flex;
+  justify-content: space-between;
+}

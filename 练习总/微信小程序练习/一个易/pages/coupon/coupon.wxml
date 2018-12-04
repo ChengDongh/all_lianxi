@@ -1,0 +1,32 @@
+<view class='exchangeHongbao'>
+  <input type='text' placeholder='请输入优惠码'></input>
+  <button bindtap='exchangeHongbao'>兑换</button>
+</view>
+<view class='page' wx:if='{{type}}'>
+  <view class='none'>
+    <image mode='widthFix' src='../../resource/image/coupon.png'></image>
+    <text>您还没有优惠券</text>
+  </view>
+</view>
+<view class='coupon' wx:else>
+  <view wx:for='{{source}}' wx:key='{{ticket.id}}' wx:for-item='ticket' data-index="{{index}}" class='ticket' data-ticket='{{ticket}}' bindtap='chooseCoupon'>
+     <icon type='success_no_circle' color='white' size="20" class="{{select==index?'active':''}}"></icon> 
+    <view class='t-head'>
+      <text class='price'>￥{{ticket.price}}</text>
+      <text class='title' wx:if="{{ticket.min_price==0}}">无使用红包</text>
+    <text class='title' wx:else>￥满{{ticket.min_price}}元可用</text>
+    </view>
+  <view class='t-body'>
+  <text class='t-body-title'>{{ticket.title}}</text>
+  <text class='t-body-time'>{{ticket.create_time}}  -  {{ticket.finish_time}}</text>
+  </view>
+    <!-- <rich-text  nodes='{{nodes[index]}}'></rich-text>  -->
+
+    <!-- <view wx:if='{{!isFromePlaceOrder}}' class='home' data-product='{{ticket.product}}' bindtap='home'>
+     进商城使用
+    </view> -->
+  </view>
+</view>
+<view class='nouse' bindtap='nouse'>
+  <text>不使用优惠</text>
+</view>

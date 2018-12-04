@@ -1,0 +1,74 @@
+{
+  "pages": [
+    "pages/market/market",
+    "pages/product/product",
+    "pages/favorite/favorite",
+    "pages/express/expressDetail/expressDetail",
+    "pages/placeorder/placeorder",
+    "pages/refund/refund",
+    "pages/evaluate/evaluate",
+    "pages/orderList/orderList",
+    "pages/feedback/feedback",
+    "pages/shop_cart/shop_cart",
+    "pages/express/express",
+    "pages/fightProduct/fightProduct",
+    "pages/fightGroups/fightGroups",
+    "pages/authuser/authuser",
+    "pages/logisticsstate/logisticsstate",
+    "pages/my/my",
+    "pages/orderdetail/orderdetail",
+    "pages/search/search",
+    "pages/coupon/coupon",
+    "pages/productList/productList",
+    "pages/order/orderDetail/orderDetail",
+    "pages/makemoney/makemoney",
+    "pages/welcome/welcome",
+    "pages/index/index",
+    "pages/bindmobile/bindmobile",
+    "pages/regist/regist",
+    "pages/apply/apply",
+    "pages/forward/forward",
+    "pages/category_products/category_products",
+    "pages/zhengpin/zhengpin",
+    "pages/express/idCard/expressIdCard",
+    "pages/levelSeting/levelSeting",
+    "pages/address_sender/address_sender",
+    "pages/activity/activity",
+    "pages/logistics/logistics",
+    "pages/payment/payment"
+  ],
+  "debug": false,
+  "window": {
+    "backgroundTextStyle": "light",
+    "navigationBarTitleText": "一个易",
+    "navigationBarBackgroundColor": "white",
+    "navigationBarTextStyle": "black",
+    "onReachBottomDistance": 300
+  },
+  "tabBar": {
+    "backgroundColor": "#ffffff",
+    "color": "#666666",
+    "selectedColor": "#FC911D",
+    "borderStyle": "white",
+    "list": [
+      {
+        "pagePath": "pages/market/market",
+        "text": "商城",
+        "iconPath": "resource/image/shop1.png",
+        "selectedIconPath": "resource/image/shop1(s).png"
+      },
+      {
+        "pagePath": "pages/shop_cart/shop_cart",
+        "text": "购物车",
+        "iconPath": "resource/image/tab_living.png",
+        "selectedIconPath": "resource/image/tab_living_click.png"
+      },
+      {
+        "pagePath": "pages/my/my",
+        "text": "我",
+        "iconPath": "resource/image/my.png",
+        "selectedIconPath": "resource/image/my(s).png"
+      }
+    ]
+  }
+}

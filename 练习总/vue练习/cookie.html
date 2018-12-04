@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<script src="jquery.js"></script>
+		<script type="text/javascript">
+			function setCookie(cname,cvalue,exdays){
+				var d = new Date();
+				d.setTime(d.getTime() + (exdays * 24 * 60 * 60 * 1000));
+				var expires = "expires=" + d.toGMTString();
+				document.cookie = cname + "=" + cvalue + ";" + expires;
+			}
+			function getCookie(cname){
+				var name = cname + "=";
+				var ca = document.cookie.split(';');
+				for(var i=0;i<ca.length;i++){
+					var c = ca[i].trim();
+					if(c.indexOf(name)==0){
+						return c.substring(name.length,c.length);
+					}
+				}
+				return "";
+			}
+			function checkCookie(){
+				var user = getCookie("names")
+				console.log(user)
+				if(user != ""){
+					// alert("good " + user)
+                    setCookie("names",'',-1)
+				}else{
+					user = prompt("your name :","")
+					if(user !='' && user != null){
+						setCookie("names",user,1)
+					}
+				}
+
+			}
+		</script>
+	</head>
+	
+	<body onload="checkCookie()">
+	<!--<button onclick="checkCookies()"></button>-->
+		<!--<div id="btn" style="width: 100px;height: 30px;border: 1px solid black;"></div>-->
+		<!--<button onclick="btn()">获取cook</button>-->
+		<!--<script type="text/javascript">
+			/**
+			 * 设置cookie
+			 * @param name cookie的名称
+			 * @param value cookie的值
+			 * @param day cookie的过期时间
+			 */
+//			var setCookie = function(name, value, day) {
+//				if(day !== 0) { //当设置的时间等于0时，不设置expires属性，cookie在浏览器关闭后删除
+//					var expires = day * 24 * 60 * 60 * 1000;
+//					var date = new Date(+new Date() + expires);
+//					document.cookie = name + "=" + escape(value) + ";expires=" + date.toUTCString();
+//				} else {
+//					document.cookie = name + "=" + escape(value);
+//				}
+//			};
+//			
+//			function getCookie(c_name) {
+//				var that = this;　　　　
+//				if(document.cookie.length > 0) {
+//					//检查这个cookie是否存在，不存在就为 -1
+//					c_start = document.cookie.indexOf(c_name + "=")
+//					if(c_start != -1) {
+//						//获取cookie值的开始位置
+//						c_start = c_start + c_name.length + 1;
+//						//通过";"号是否存在来判断结束位置
+//						c_end = document.cookie.indexOf(";", c_start);
+//
+//						if(c_end == -1) {
+//							c_end = document.cookie.length;
+//						}
+//						//通过substring()得到了值
+//						return unescape(document.cookie.substring(c_start, c_end))　　
+//					}　　　　
+//				}　　　　
+//				return ""　　
+//			}
+//			function setCookie(cname,cvalue,exdays){
+//				var d = new Date();
+//				d.setTime(d.getTime() + (exdays * 24 * 60 * 60 * 1000));
+//				var expires = "expires=" + d.toGMTString();
+//				document.cookie = cname + "=" + cvalue + ";" + expires;
+//			}
+//			function getCookie(cname){
+//				var name = cname + "=";
+//				var ca = document.cookie.split(';');
+//				for(var i=0; i<ca.length; i++){
+//					var c = ca[i].trim();
+//					if(c.indexOf(name)==0){
+//						return c.substring(name.length,c.length);
+//					}
+//				}
+//				return;
+//			}
+//			function btn(){
+//				var cookies= getCookie("sss");
+//				if(cookies!=''){
+//					$('#btn').html(cookies)
+//				}else{
+//					setCookie("wwwww","good boy",1)
+//				}
+//			}
+			
+		<!--</script>-->
+		
+			<!--cookie设置语法：
+			document.cookie = "cookieName=mader; expires=Fri, 31 Dec 2017 15:59:59 GMT; path=/mydir; domain=cnblogs.com; max-age=3600; secure=true";
+ 			cookieName=mader ：name=value，cookie的名称和值
+ 			expires=Fri, 31 Dec 2017 15:59:59 GMT： expires，cookie过期的日期，如果没有定义，cookie会在对话结束时过期。日期格式为 new Date().toUTCString()
+ 			path=/mydir: path=path (例如 '/', '/mydir') 如果没有定义，默认为当前文档位置的路径。
+ 			domain=cnblogs.com： 指定域(例如 'example.com'， '.example.com' (包括所有子域名), 'subdomain.example.com') 如果没有定义，默认为当前文档位置的路径的域名部分。
+ 			max-age=3600： 文档被查看后cookie过期时间，单位为秒
+ 			secure=true： cookie只会被https传输 ，即加密的https链接传输-->
+		
+</body>
+
+</html>
+<!--<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<title>菜鸟教程(runoob.com)</title>
+	</head>
+
+	<head>
+		<script>
+			function setCookie(cname, cvalue, exdays) {
+				var d = new Date();
+				d.setTime(d.getTime() + (exdays * 24 * 60 * 60 * 1000));
+				console.log(d)
+				var expires = "expires=" + d.toGMTString();
+				document.cookie = cname + "=" + cvalue + "; " + expires;
+			}
+			function getCookie(cname) {
+				var name = cname + "=";
+				var ca = document.cookie.split(';');
+				for(var i = 0; i < ca.length; i++) {
+					var c = ca[i].trim();
+					console.log(c.indexOf(name))
+					if(c.indexOf(name) == 0) {
+						return c.substring(name.length, c.length);
+					}
+				}
+				return "";
+			}
+
+			function checkCookie() {
+				var user = getCookie("username");
+				if(user != "") {
+					alert("欢迎 " + user + " 再次访问");
+				} else {
+					user = prompt("请输入你的名字:", "");
+					if(user != "" && user != null) {
+						setCookie("username", user, 30);
+					}
+				}
+			}
+		</script>
+	</head>-->
+
+	<!--<body onload="checkCookie()"></body>-->
+
+<!--</html>-->

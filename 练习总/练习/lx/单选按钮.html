@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+	<body>
+		<!--<form>-->
+			<!--<div class="mui-input-row mui-radio mui-left">-->
+						<!--<label>3个/￥2</label>
+						<input name="radio" value="3" type="radio" checked>
+					</div>-->
+					<div class="mui-input-row mui-radio mui-left">
+						<label>无</label>
+						<input name="radio" value="30" type="radio">
+					</div>
+					<div class="mui-input-row mui-radio mui-left">
+						<label>一个月</label>
+						<input name="radio" value="300" type="radio">
+					</div>
+			
+		<!--</form>-->
+		<button>提交</button>
+		<script type="text/javascript" src="jquery.js"></script>
+		<script type="text/javascript">
+    		$(function(){
+        		$('button').click(function(){
+            		var val = $('input[name="radio"]:checked').val();
+            		console.log(val);   
+        		});
+    		})
+    		console.log(100/100)
+		</script>
+	</body>
+</html>

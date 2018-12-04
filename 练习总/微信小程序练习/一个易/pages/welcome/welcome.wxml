@@ -1,0 +1,21 @@
+
+<!--login.wxml-->
+<view class="container">
+  <view class="appinfo">
+    <image class="appinfo-logo" src="http://image.aidaojiacdn.com/bc591932a2dca2e20ca10d58a863184c_180x180.png" background-size="cover"></image>
+    <text class="appinfo-text">卡美啦——全球正品货源S2B服务专家</text>
+  </view>
+  <view class="bottom-container">
+    <view class="opration">
+      <navigator url="/pages/bindmobile/bindmobile">
+        <button class="bind-btn">已有账号 去绑定</button>
+      </navigator>
+      <navigator url="/pages/regist/regist">
+        <button class="regist-btn">没有账号 去注册</button>
+      </navigator>
+    </view>
+    <view>
+      <image class="market" mode="aspectFit" src="http://image.aidaojiacdn.com/b5b28f586109766372ed09e8003c4919_1125x240.png"></image>
+    </view>
+  </view>
+</view>

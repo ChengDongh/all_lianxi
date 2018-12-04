@@ -1,0 +1,26 @@
+<!--pages/logisticsstate/logisticsstate.wxml-->
+<view class='order-head'>
+  <view class='order-list'>
+    <image class='shopimg'></image>
+    <view class='order-title'>
+      <text>11111
+      </text>
+      <text>22222222
+      </text>
+    </view>
+  </view>
+  <view class='order-list2'>
+    <text>共一件商品，由【圆通速递】承运</text>
+    <text>运单编号:800489058663733524</text>
+    <text class='post'>物流状态:<text>运输中</text></text>
+  </view>
+</view>
+<view class='order-body'>
+  <view class='order-state' wx:for="{{state}}" wx:key="{{index}}">
+    <icon type='success' color='orange' size='15'></icon>
+    <view class='order-staten'>
+    <text>{{item.title}}</text>
+    <text>{{item.time}}</text>
+    </view>
+  </view>
+</view>
