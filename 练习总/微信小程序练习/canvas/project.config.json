@@ -4,16 +4,16 @@
 		"ignore": []
 	},
 	"setting": {
-		"urlCheck": false,
+		"urlCheck": true,
 		"es6": true,
 		"postcss": true,
 		"minified": true,
 		"newFeature": true
 	},
 	"compileType": "miniprogram",
-	"libVersion": "2.3.0",
+	"libVersion": "2.4.1",
 	"appid": "wx22fbe8eca4720bd8",
-	"projectname": "%E5%9B%BE%E7%89%872",
+	"projectname": "canvas",
 	"debugOptions": {
 		"hidedInDevtools": []
 	},

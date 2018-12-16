@@ -1,0 +1,4 @@
+<canvas style="width: 320px; height: 200px;" bindtouchstart="touchS" canvas-id="myCanvas" bindtouchmove="touchM"></canvas>
+<canvas style="width: 320px; height: 200px;" bindtouchstart="touchS1" bindtouchmove="touchM1" canvas-id="myCanvas1"></canvas>
+<button bindtap='photo'>选择图片</button>
+<button bindtap='cat_photo'>截取图片</button>

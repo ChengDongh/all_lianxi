@@ -10,7 +10,7 @@
 		<div id="aaa"></div>
 
 		<script type="text/javascript" src="jquery.js"></script>
-		
+
 		<script type="text/javascript">
 			function getLocalTime(nS) {
 				return new Date(parseInt(nS) * 1000).Format("yyyy-MM-dd hh:mm:ss");
@@ -58,21 +58,21 @@
 			//			for(var i = 0, l = rows.length; i < l; i++) {
 			//				console.log(rows[i].name + " | " + rows[i].time);
 			//			}
-//			$.each(rows, function() {
-//				html = html + `<div><span>${this.name}</span><span>${this.time}</span></div>`
-//			})
+			//			$.each(rows, function() {
+			//				html = html + `<div><span>${this.name}</span><span>${this.time}</span></div>`
+			//			})
 			$.each(data, function() {
 				html = html + `<div>${getLocalTime(this.time)}</div>`
 			})
-			$('#aaa').html(html)
+			$('#aaa').html(html);
 		</script>
 		<script type="text/javascript">
 			var now = new Date();
 			var year = now.getFullYear();
 			var month = now.getMonth() + 1;
 			var day = now.getDate();
-			month = month<10 ? "0"+month : month;
-			day = day<10 ? '0' + day : day;
+			month = month < 10 ? "0" + month : month;
+			day = day < 10 ? '0' + day : day;
 			console.log(year + ':' + month + ':' + day);
 		</script>
 	</body>

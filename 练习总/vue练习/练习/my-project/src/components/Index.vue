@@ -1,10 +1,21 @@
 <template>
   <div id="index">
     <router-link to="/copy">去复制</router-link>
+    <div id="app4">
+      <input id="radio1" type="radio" v-model="checked" value="文学">
+      <label for="radio1">文学</label>
+      <input id="radio2" type="radio" v-model="checked" value="艺术">
+      <label for="radio2">艺术</label>
+      <input id="radio3" type="radio" v-model="checked" value="经济">
+      <label for="radio3">经济</label>
+      <br>
+      <p>选择了：{{checked}}</p>
+    </div>
     <div class="heights" style="height: 1000px">1215</div>
     <span>{{time_now}}</span><br>
     <span>{{time_now | timeData}}</span>
     <span>{{pages}}</span>
+
     <testComponent :val=value @bbb="aaa"></testComponent>
   </div>
 </template>
@@ -23,6 +34,7 @@
         time_now: '',
         pages: 0,
         height: 1000,
+        checked: '文学'
       }
     },
     created() {

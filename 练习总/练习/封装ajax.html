@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<script src="jquery-3.3.1.min.js"></script>
+<script src="封装ajax.js"></script>
+<script>
+    var data = {
+        page:1
+    }
+    $myajax("/Account/Userinfo", "POST", data).then(function(res) {
+
+    })
+</script>
+</body>
+</html>
