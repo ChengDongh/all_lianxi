@@ -1,6 +1,0 @@
-<template name="twoLabel">
-  <view class="label">
-    <text class="label-left font_12 kcontentcolor">{{title}}</text>
-    <text class="label-right font_12 kcontentcolor">{{detail}}</text>
-  </view>
-</template>

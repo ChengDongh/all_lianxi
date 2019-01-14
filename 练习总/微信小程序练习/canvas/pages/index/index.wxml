@@ -1,4 +1,11 @@
-<canvas style="width: 320px; height: 200px;" bindtouchstart="touchS" canvas-id="myCanvas" bindtouchmove="touchM"></canvas>
-<canvas style="width: 320px; height: 200px;" bindtouchstart="touchS1" bindtouchmove="touchM1" canvas-id="myCanvas1"></canvas>
-<button bindtap='photo'>选择图片</button>
-<button bindtap='cat_photo'>截取图片</button>
+<view class='all_box'>
+  <view id='img_box' style='width:{{img_box_width}}px;height:{{img_box_height}}px'>
+    <image wx:for="{{itemList}}" wx:for-item="item" wx:key="{{index}}" bindtouchstart='touchS' data-index='{{item.id}}' bindtouchmove='touchM' bindtouchend='touchE' style="width:{{item.width}}px;height:{{item.height}}px;top:{{item.top}}px;left:{{item.left}}px;position:absolute;display:inline-block;z-index:{{item.z_index}}"
+      src="{{item.image}}"></image>
+  </view>
+  <view id='box' style='width:{{box_width}}px;height:{{box_height}}px'>
+    <image wx:for="{{images}}" wx:for-item="item" wx:key="{{index}}" id='box{{item.id}}' src='{{item.img}}' data-id='{{item.id}}'></image>
+  </view>
+  <view class='count_down' wx:if="{{!show}}" style=''>倒计时: {{time}}</view>
+  <button wx:if="{{show}}" bindtap='start' class='btn'>{{text}}</button>
+</view>

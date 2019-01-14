@@ -1,7 +1,7 @@
 function $myajax(urls, type, data, isasync) {
     let tip = "http://qcapp.mangneng.com" //公共的url的服务端和端口号
     tip = tip + urls;
-    if(type == 'POST') {
+    if (type == 'POST') {
         return $.ajax({
             url: tip,
             type: 'POST',
@@ -12,7 +12,7 @@ function $myajax(urls, type, data, isasync) {
             },
         })
     }
-    if(type == 'GET') {
+    if (type == 'GET') {
         return $.ajax({
             url: tip,
             type: 'GET',

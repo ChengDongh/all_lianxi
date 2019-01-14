@@ -1,8 +1,0 @@
-/* pages/authuser/authuser.wxss */
- @import "/pages/my/my.wxss"; 
- .authtext{
-   display: block;
-   text-align: center;
-   font-size: 30rpx;
-   margin: 30rpx;
- }

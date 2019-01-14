@@ -1,21 +1,48 @@
 /**index.wxss**/
-.userinfo {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+.all_box{
+  width:100%;
+  height:100vh;
+  padding-top:100px;
+  background-image: url('http://cdn.qiqiangkeji.com/20190113.0d4daf787db2bb5d8b0a8fe952bf184e_500x888.jpg');
+  opacity: 0.8;
+  position: relative;
 }
-
-.userinfo-avatar {
-  width: 128rpx;
-  height: 128rpx;
-  margin: 20rpx;
-  border-radius: 50%;
+#img_box{
+  position:absolute;
+  right: 0;
+  border: 2px solid orange;
 }
-
-.userinfo-nickname {
-  color: #aaa;
+#img_box image{
+  border: 2px solid orange;
 }
-
-.usermotto {
-  margin-top: 200px;
+#box{
+  position: absolute;
+  border: 4px solid orange;
+  top: 100px;
+  display:flex;
+  flex-wrap:wrap;
+  margin: 0 auto;
+  left: 19%;
+}
+.btn{
+  width: 200px;
+  margin-top: 230px;
+  color: white;
+  background: orange
+}
+#box image{
+  width:50px;
+  height:50px;
+  border:2px solid orange;
+  border-radius: 6px;
+}
+.count_down{
+  display:inline-block;
+  position:absolute;
+  right:0;
+  top:10px;
+  color: orange;
+  font-weight: 600;
+  font-size: 18px;
+  width: 100px
 }

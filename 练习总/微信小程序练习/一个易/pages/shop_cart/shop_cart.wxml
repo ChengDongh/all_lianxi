@@ -1,4 +1,0 @@
-<import src="../component/template_cart.wxml"/>
-<view class="containers">
-     <template is="{{list !='' ? 'cart-goods-list' : 'no-goods'}}" data="{{list,level,totalPrice,allSelect,hidden,sort}}"></template>
-</view>

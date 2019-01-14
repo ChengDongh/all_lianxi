@@ -1,3 +1,0 @@
-<view>
-  <image class="zhengpin_pic" mode="aspectFit" wx:for="{{imgs}}" wx:key="src" src="{{item.src}}" bindload="imageLoad" style="height: {{item.imageheight}}rpx;" wx:for-index="idx" data-idx="{{idx}}"></image>
-</view>
