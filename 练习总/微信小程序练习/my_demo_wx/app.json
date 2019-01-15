@@ -1,6 +1,5 @@
 {
   "pages": [
-    
     "pages/market/market",
     "pages/coupon/coupon",
     "pages/orderList/orderList",
@@ -12,7 +11,8 @@
     "pages/product/product",
     "pages/placeorder/palceorder",
     "pages/authorize/authorize",
-    "pages/collect/collect"
+    "pages/collect/collect",
+    "pages/feedbacks/feedbacks"
   ],
   "window": {
     "backgroundTextStyle": "light",
