@@ -4,7 +4,7 @@
       src="{{item.image}}"></image>
   </view>
   <view id='box' style='width:{{box_width}}px;height:{{box_height}}px'>
-    <image wx:for="{{images}}" wx:for-item="item" wx:key="{{index}}" id='box{{item.id}}' src='{{item.img}}' data-id='{{item.id}}'></image>
+    <image wx:for="{{images}}" wx:for-item="item" wx:key="{{index}}" class='{{item.class_s}}' id='box{{item.id}}' src='{{item.img}}' data-id='{{item.id}}'></image>
   </view>
   <view class='count_down' wx:if="{{!show}}" style=''>倒计时: {{time}}</view>
   <button wx:if="{{show}}" bindtap='start' class='btn'>{{text}}</button>

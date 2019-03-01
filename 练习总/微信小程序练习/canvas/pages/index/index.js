@@ -163,7 +163,8 @@ Page({
       itemList1: itemList
     })
   },
-  onLoad: function() {
+  onLoad: function (options) {
+    // console.log(options.source)
     var that = this;
     items = that.data.itemList;
     imagelist = that.data.images;
@@ -380,5 +381,19 @@ Page({
         })
       }
     })
+  },
+  onUnload: function () {
+    clearInterval(timer)
+  },
+  onShareAppMessage: function () {
+    return {
+
+      title: '自定义分享标题',
+
+      desc: '自定义分享描述',
+
+      path: '/pages/logs/logs'
+
+    }
   }
 })

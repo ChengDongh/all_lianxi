@@ -1,4 +1,4 @@
-<view class='my'>
+  <view class='my'>
   <view class='header'>
     <image src='../resource/image/mybanner.png'></image>
     <view class='userInfo'>
@@ -6,7 +6,7 @@
         <open-data type="userAvatarUrl"></open-data>
       </view>
       <open-data type="userNickName"></open-data>
-    </view>
+    </view>                             
   </view>
   <view class='content'>
     <navigator url='/pages/orderList/orderList?isBack={{isBack}}'>

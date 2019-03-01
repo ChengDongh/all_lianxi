@@ -1,4 +1,4 @@
-// pages/feedbacks.js
+// pages/feedbacks/feedbacks.js
 Page({
 
   /**

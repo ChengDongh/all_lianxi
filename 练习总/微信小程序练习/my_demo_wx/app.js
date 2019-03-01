@@ -1,17 +1,30 @@
 //app.js
 App({
-  onLaunch: function () {
+  onLaunch: function() {
     // 展示本地存储能力
+    var that = this;
     var logs = wx.getStorageSync('logs') || []
     logs.unshift(Date.now())
     wx.setStorageSync('logs', logs)
 
     // 登录
-    // wx.login({
-    //   success: res => {
-    //     // 发送 res.code 到后台换取 openId, sessionKey, unionId
-    //   }
-    // })
+    wx.login({
+      success: res => {
+        console.log(res)
+        // 发送 res.code 到后台换取 openId, sessionKey, unionId
+        // wx.request({
+        //   url: 'https://api.weixin.qq.com/sns/jscode2session?appid=APPID&secret=SECRET&js_code=' + res.code + '&grant_type=authorization_code',
+        //   header: {
+        //     'content-type': 'application/json'
+        //   },
+        //   success: function (res) {
+          
+        //     console.log(res)
+        //   }
+        // })
+        
+      }
+    })
     // 获取用户信息
     wx.getSetting({
       success: res => {
@@ -20,16 +33,15 @@ App({
           wx.getUserInfo({
             success: res => {
               // 可以将 res 发送给后台解码出 unionId
-              this.globalData.userInfo = res.userInfo
-
+              that.globalData.userInfo = res.userInfo
               // 由于 getUserInfo 是网络请求，可能会在 Page.onLoad 之后才返回
               // 所以此处加入 callback 以防止这种情况
-              if (this.userInfoReadyCallback) {
-                this.userInfoReadyCallback(res)
+              if (that.userInfoReadyCallback) {
+                that.userInfoReadyCallback(res)
               }
             }
           })
-        }else{//没有授权 跳转到授权页面
+        } else { //没有授权 跳转到授权页面
           wx.reLaunch({
             url: '/pages/authorize/authorize',
           })

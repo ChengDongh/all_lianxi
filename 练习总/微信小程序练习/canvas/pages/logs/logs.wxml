@@ -1,6 +1,7 @@
 <!--logs.wxml-->
-<view class="container log-list">
-  <block wx:for="{{logs}}" wx:for-item="log">
-    <text class="log-item">{{index + 1}}. {{log}}</text>
-  </block>
+<view class="container">
+  <view>
+    <button class='btn1' data-index='1' bindtap='go'>账号一</button>
+    <button class='btn2' data-index='2' bindtap='go'>账号二</button>
+  </view>
 </view>

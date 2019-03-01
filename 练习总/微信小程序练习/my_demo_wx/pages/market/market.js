@@ -1,4 +1,5 @@
 // pages/market/market.js
+const app = getApp();
 Page({
 
   /**
@@ -111,8 +112,8 @@ Page({
   /**
    * 生命周期函数--监听页面加载
    */
-  onLoad: function(options) {
-    
+  onLoad: function() {
+    console.log(11111)
   },
   //头部导航条
   hotSearch(e) {
@@ -125,7 +126,8 @@ Page({
     this.loadData();
   },
   loadData:function(){
-    this.setData({
+    var that = this;
+    that.setData({
       products:[],
       banners:[]
     });
@@ -133,9 +135,9 @@ Page({
       title: '加载中',
     });
     setTimeout(() => {
-      var products = this.data.products_1;
-      var banners = this.data.banners_1;
-      this.setData({
+      var products = that.data.products_1;
+      var banners = that.data.banners_1;
+      that.setData({
         products,
         banners
       });
@@ -145,30 +147,30 @@ Page({
   /**
    * 生命周期函数--监听页面初次渲染完成
    */
-  onReady: function() {
+  // onReady: function() {
 
-  },
+  // },
 
   /**
    * 生命周期函数--监听页面显示
    */
-  onShow: function() {
+  // onShow: function() {
 
-  },
+  // },
 
   /**
    * 生命周期函数--监听页面隐藏
    */
-  onHide: function() {
+  // onHide: function() {
 
-  },
+  // },
 
   /**
    * 生命周期函数--监听页面卸载
    */
-  onUnload: function() {
+  // onUnload: function() {
 
-  },
+  // },
 
   /**
    * 页面相关事件处理函数--监听用户下拉动作

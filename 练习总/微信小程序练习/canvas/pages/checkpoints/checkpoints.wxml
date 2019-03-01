@@ -1,0 +1,5 @@
+<view class="containers">
+  <scroll-view scroll-y class='select_box'>
+    <view class='select' bindtap='select' wx:for="{{arrs}}" wx:key='{{index}}' data-index='{{item.index}}' wx:for-item="item">{{item.index}}</view>
+  </scroll-view>
+</view>

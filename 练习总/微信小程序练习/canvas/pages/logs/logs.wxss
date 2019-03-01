@@ -1,8 +1,12 @@
-.log-list {
-  display: flex;
-  flex-direction: column;
-  padding: 40rpx;
+.container{
+  width:100%;
+  height:100vh;
+  background-image: url('http://cdn.qiqiangkeji.com/20190113.0d4daf787db2bb5d8b0a8fe952bf184e_500x888.jpg');
+  padding-top: 150px;
 }
-.log-item {
-  margin: 10rpx;
+.btn1,.btn2{
+  margin: 20px 0;
+  width: 200px;
+  color: white;
+  background: orange
 }

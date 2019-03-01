@@ -36,6 +36,9 @@
   border:2px solid orange;
   border-radius: 6px;
 }
+/* #box image:hover{
+  
+} */
 .count_down{
   display:inline-block;
   position:absolute;
@@ -46,3 +49,6 @@
   font-size: 18px;
   width: 100px
 }
+
+.back{animation:back 1s linear 1;}
+@keyframes back{from{transform: rotateY(-180deg);}  to{transform: rotateY(0deg);}}
