@@ -1,0 +1,137 @@
+一 HTML
+
+二 CSS
+
+三 JS
+
+四 Vue
+
+<1> 解决深层次组件间的通信 $attrs, $listeners
+  a>  父组件向子组件传值时 子组件中的props 如果没有接受父组件传过来的值时 该值会当做属性值绑定在
+      子组件上  通过设置 inheritAttrs 为 false, 这些默认行为将会被去掉。 而通过实例属性 $attrs 可以
+      让这些特性生效， 而且可以通过 v-bind 显性的绑定到非跟元素上。 （没有在props接受的参数 通过this.$attrs 接收 console.log(this.$attrs) 是一个	对象{ key : val}）
+	
+<2> 配置开发环境和生成环境
+ 起始项目中的配置 （congif文件夹）
+ a> 开发环境原有的代码
+	//'use strict'
+	//const merge = require('webpack-merge')
+	//const prodEnv = require('./prod.env')
+
+	//module.exports = merge(prodEnv, {
+  	//   NODE_ENV: '"development"'
+	//})
+ b> 正式（生产）环境原有的代码
+	//'use strict'
+	//module.exports = {
+        //NODE_ENV: '"production"'
+        //}
+     配置开发环境和正式（生产）环境环境，为了我们发的请求可以自动识别是开发还是正式（生产）
+（1）开发环境代码的配置
+
+
+	'use strict'
+
+	const merge = require('webpack-merge')
+
+	const prodEnv = require('./prod.env')
+ 
+
+	module.exports = merge(prodEnv, {
+  
+	    NODE_ENV: '"development"',
+ 
+	    BASE_API: '"http://192.168.1.63:8080/IEMS/v1"',//生产环境的url
+
+	)}
+
+
+（2）正式（生产）环境代码的配置
+
+ 
+
+	module.exports = {
+  
+		NODE_ENV: '"production"',
+  
+		BASE_API: '"http://192.168.1.118:8080/IEMS/v1"',//正式环境的URl
+
+	}
+
+（3）使用
+
+
+	const service = axios.create({
+ 
+ 		baseURL: process.env.BASE_API,//自己定义一个baseURL，这里我写在了实例里面
+
+	})
+
+   原理
+
+刚接触这一块的时候感觉只配置就可以进行识别，是不是太过于神奇了？其实配置过之后可以进行自动识别是webpack在我们的vue项目进行生成的时候就为我们进行了做了前提工作，在这里我就谈谈我自己的理解
+
+
+（1）自动生成的build >?webpack.base.conf.js中：（代码太多只截取了部分需要的代码）
+
+
+	module.exports = {
+  
+		context: path.resolve(__dirname, '../'),
+  
+		entry: {
+    app: './src/main.js'// 配置webpack编译入口
+  },
+  
+		output: {
+    path: config.build.assetsRoot,
+    
+		filename: '[name].js',
+    
+		publicPath: process.env.NODE_ENV === 'production' // webpack编译输出的发布路径(判断是开发环境或者生产环境等)
+      
+			? config.build.assetsPublicPath
+      
+			: config.dev.assetsPublicPath
+  
+		},
+
+	}
+<3> 代理服务器
+	config文件夹
+	dev.enc.js文件
+
+	'use strict'
+	const merge = require('webpack-merge')
+	const prodEnv = require('./prod.env')
+
+	module.exports = merge(prodEnv, {
+  		NODE_ENV: '"development"',
+  		OPEN_PROXY:true          //是否需要代理
+	})
+	index.js文件
+
+	'use strict'
+
+	const path = require('path')
+	const  devEnv = require('./dev.env') //引入文件（1）
+	module.exports = {
+  	dev: {
+
+    	// Paths
+    	assetsSubDirectory: 'static',
+    	assetsPublicPath: '/',
+   	 // 代理列表, 是否开启代理通过[./dev.env.js]配置（1）
+    	proxyTable: devEnv.OPEN_PROXY === false?{}:{
+      		'/proxyApi':{
+        		target:'http://www.baidu.com',// 接口域名（1）
+        		changeOrigin:true,//是否跨域（1）
+        		pathRewrite:{
+          			'^/proxyApi':'/'//重定向 把 /proxyApi 开头替换成 /（1）
+        		}
+     	 	}
+   	 },
+
+	
+
+

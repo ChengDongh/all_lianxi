@@ -18,11 +18,11 @@ App({
         //     'content-type': 'application/json'
         //   },
         //   success: function (res) {
-          
+
         //     console.log(res)
         //   }
         // })
-        
+
       }
     })
     // 获取用户信息

@@ -125,11 +125,11 @@ Page({
     })
     this.loadData();
   },
-  loadData:function(){
+  loadData: function() {
     var that = this;
     that.setData({
-      products:[],
-      banners:[]
+      products: [],
+      banners: []
     });
     wx.showLoading({
       title: '加载中',
@@ -176,6 +176,7 @@ Page({
    * 页面相关事件处理函数--监听用户下拉动作
    */
   onPullDownRefresh: function() {
+    console.log(2222)
     wx.showLoading({
       title: '加载中',
     });
@@ -186,7 +187,7 @@ Page({
       });
       wx.hideLoading();
       wx.stopPullDownRefresh();
-    },2000)
+    }, 2000)
   },
 
   /**
@@ -205,5 +206,44 @@ Page({
    */
   onShareAppMessage: function() {
 
+    wx.showShareMenu({
+      withShareTicket: true
+    })
+
+
+    return {
+      title: '转发时显示的标题',
+      path: '转发的页面路径',
+
+      success: res => {
+        console.log('--- 转发回调 ---', res);
+
+        //onShareAppMessage回调的shareTickets，如果没有，就说明不是转发到群聊的
+        console.log('--- shareTickets ---', res.shareTickets);
+        wx.showToast({
+          title: res,
+        })
+        //转发到群里的才会有shareTickets
+        if (res.shareTickets && res.shareTickets[0]) {
+
+          //获取转发的详细信息
+          wx.getShareInfo({
+            shareTicket: res.shareTickets[0],
+            success: res => {
+              console.log('--- 错误信息 ---', res.errMsg);
+              console.log('--- 包括敏感数据在内的完整转发信息的加密数据 ---', res.encryptedData);
+              console.log('--- 错误信息 ---', res.iv);
+            },
+            fail: error => {
+              console.log('--- getShareInfo fail ---', error);
+            }
+          })
+        }
+      },
+      fail: () => {
+        console.log('--- 转发失败 ---', path);
+      }
+
+    }
   }
 })

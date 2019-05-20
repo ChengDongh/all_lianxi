@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+
+	<body>
+		<script type="text/javascript">
+			var arr = [3, 2, 4, 5, 5, 3, 5, 568, 4, 21, 7];
+			var arr1 = fu(arr);
+
+			function fu(array) {
+				var arr2 = [];
+				arr2.push(array[0]);
+				abc: for(var i = 0; i < array.length; i++) {
+					for(var j = 0; j < arr2.length; j++) {
+						if(arr2[j] == array[i]) {
+							continue abc;
+						}
+					}
+					arr2.push(array[i]);
+				}
+				return arr2;
+			}
+			console.log(arr1);
+
+			var str = [3, 2, 4, 5, 5, 3, 5, 568, 4, 21, 7];
+			var str1 = fus(str);
+
+			function fus(array) {
+				var newArr = [];
+				for(var i = 0; i < array.length; i++) {
+					var bool = true;
+					for(var j = 0; j < newArr.length; j++) {
+						if(array[i] === newArr[j]) {
+							bool = false;
+						}
+					}
+					if(bool) {
+						newArr[newArr.length] = array[i]
+					}
+				}
+				return newArr;
+			}
+			console.log(str1)
+		</script>
+	</body>
+
+</html>

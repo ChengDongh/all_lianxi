@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<script src="./jquery-3.3.1.min.js"></script>
+<div id="checkList">
+    <input id="check" class="check" type="checkbox"><label for="check">9</label>
+    <input id="check1" class="check" type="checkbox"><label for="check1">8</label>
+    <input id="check2" class="check" type="checkbox"><label for="check2">7</label>
+    <input id="check3" class="check" type="checkbox"><label for="check3">6</label>
+</div>
+<div style="position: relative">
+    <span style="display: inline-block;width: 68px;top: 0;left: 0;border: 1px solid red;text-align: center;background-color: red">导出</span>
+    <input style="width: 70px;position: absolute;top: 0;left: 0;opacity: 0" onchange="submit()" c id="file" type="file">
+    <!--<button onclick="submit()">提交</button>-->
+    <img id="img" src="" alt="">
+</div>
+<script>
+    function submit() {
+        var formData = new FormData();
+        formData.append('img',$('#file')[0].files[0])
+        $.ajax({
+            url:'http://yiapi.qiqiangkeji.com/upload',
+            type:'POST',
+            data:formData,
+            contentType:false,
+            processData:false,
+            success:function (res) {
+                $('#file').val('');
+                $('#img').attr('src',res.data.url)
+            }
+        })
+    }
+    $('#checkList').on('click','.check',function () {
+        console.log($(this))
+        console.log($(this).index())
+        console.log($(this).prop('checked'))
+    })
+</script>
+</body>
+</html>

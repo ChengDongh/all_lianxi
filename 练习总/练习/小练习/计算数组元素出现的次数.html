@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+	<body>
+		<script type="text/javascript">
+			var arr = ["c","a","z","a","x","a"];
+			var json = {};
+			for(var i=0;i<arr.length;i++){
+				if(json[arr[i]] !== undefined){
+					json[arr[i]] += 1;
+				}else{
+					json[arr[i]] = 1;
+				}
+			}
+			console.log(json)
+		</script>
+	</body>
+</html>

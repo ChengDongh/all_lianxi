@@ -1,6 +1,8 @@
 {
   "pages": [
+    
     "pages/market/market",
+    "pages/lian/lian",
     "pages/coupon/coupon",
     "pages/orderList/orderList",
     "pages/feedback/feedback",
@@ -13,6 +15,8 @@
     "pages/authorize/authorize",
     "pages/collect/collect",
     "pages/feedbacks/feedbacks"
+    
+    
   ],
   "window": {
     "backgroundTextStyle": "light",

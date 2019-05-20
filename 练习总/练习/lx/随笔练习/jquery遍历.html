@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        ul{
+            margin: 0;
+            padding: 0;
+        }
+        ul li{
+            padding: 5px 10px;
+            width: 200px;
+            border: 1px solid red;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+<div>
+    <ul class="list">
+        <li data-id="666">点击一</li>
+        <li>点击二</li>
+        <li>点击三</li>
+        <li>点击四</li>
+        <li>点击五</li>
+        <li>点击六</li>
+    </ul>
+</div>
+<script src="jquery-3.3.1.min.js"></script>
+<script>
+    var obj = {one:1,two:2,three:3,four:4,five:5};
+    var basic ='sdjaishdkashdiuoah8od'
+    basic = basic.substring(1, basic.length);
+    console.log(basic)
+    delete obj.one;
+    obj.six = 6;
+    console.log(obj)
+    $.each(obj,function (index,item) {
+        console.log(item);
+        console.log(index);
+    }),
+    $('.list').on('click','li',function () {
+        console.log($(this).attr('data-id'))
+    })
+</script>
+</body>
+</html>

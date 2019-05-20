@@ -19,10 +19,11 @@
 		<img id="aaa" src="" alt="" />
 		<script type="text/javascript">
 			function upload(e) {
-				var formData = new FormData();
+
 				console.log(formData)
 				for(var i = 0; i < e.files.length; i++) {
 					formData.append("img", e.files[i]);
+                    console.log(formData)
 					$.ajax({
 						type: "post",
 						url: "http://yiapi.qiqiangkeji.com/upload",

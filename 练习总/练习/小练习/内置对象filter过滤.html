@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+	<body>
+		<script type="text/javascript">
+			var arr = [1500,1200, 2000,2100,2600,1500,1200,1000];
+			var arr1 = arr.filter(function(el,index,array){
+				if(el>=2000){
+					console.log(el);
+					console.log(index);
+					return true;
+				}
+				return false;
+			})
+			console.log(arr1)
+		</script>
+	</body>
+</html>

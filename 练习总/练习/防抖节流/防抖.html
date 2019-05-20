@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>防抖</title>
+	</head>
+
+	<body>
+		<button id="debounce">防抖</button>
+		<script type="text/javascript">
+			var timer;
+			window.onload = function() {
+				let obtn = document.getElementById('debounce'); //获取按钮
+				obtn.addEventListener('click', debounceHandle(debounce), false); //监听绑定事件
+			}
+
+			//防抖函数
+			function debounceHandle(fn) {
+				if(timer){
+					clearTimeout(timer); 
+					return;
+				}
+				return function() {
+					clearTimeout(timer); //如果存在事件就清除定时器
+					timer = setTimeout(function() { //如果不存在那么就开启定时器
+						fn.call(this, arguments);
+						timer = undefined
+					}, 2000)
+				}
+			}
+
+			//执行函数
+			function debounce() {
+				console.log('防抖，防抖，防抖');
+			}
+		</script>
+	</body>
+
+</html>

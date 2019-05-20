@@ -1,0 +1,40 @@
+<!-- <form bindsubmit="formSubmit" report-submit="{{true}}">
+  <button formType="submit" class='btn'>
+  <view class='u-publish-btn' bindtap='test'>
+  <form bindsubmit="formSubmit" report-submit="{{true}}">
+      <button formType="submit" class='btn'>
+        <view class='u-publish-btn' bindtap='test'>
+        <form bindsubmit="formSubmit" report-submit="{{true}}">
+          <button formType="submit" class='btn'>
+            <view class='u-publish-btn' bindtap='test'>
+            <form bindsubmit="formSubmit" report-submit="{{true}}">
+              <button formType="submit" class='btn'>
+                <view class='u-publish-btn' bindtap='test'>发布</view>
+              </button>
+            </form>
+            </view>
+          </button>
+        </form>
+        </view>
+      </button>
+    </form>
+  </view>
+    
+  </button>
+</form> -->
+<!-- <form bindsubmit="formSubmit" report-submit='{{true}}'>
+  <form bindsubmit="formSubmit" report-submit='{{true}}'>
+    <view class="btn-area">
+      <button form-type="submit">
+        666
+      </button>
+
+    </view>
+    <view class="btn-area">
+      <button form-type="submit">Submit</button>
+    </view>
+  </form>
+</form> -->
+<canvas style="width: 700px; height: 700px;" canvas-id="firstCanvas"></canvas>
+<button bindtap='run'>开始</button>
+<button bindtap='insert'>发射</button>

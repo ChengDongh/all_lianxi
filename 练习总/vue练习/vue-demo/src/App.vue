@@ -1,27 +1,28 @@
 <template>
   <div id="app">
+    <router-view></router-view>
     <!-- {{ $store.state.num }} -->  <!-- vue静态的常量   -->  <!-- $store是共有的意思 -->
-    <Index></Index>
-    <HelloWorld></HelloWorld>
-    <!--<Indexs></Indexs>-->
-    <div class="">
-      <button type="button" name="buttonAdd" @click="$store.commit('add',{a:5})">加五个</button><!-- vue2.0  的写法 -->
-      <button type="button" name="buttonAdd" @click="$store.commit('minus')">减一个</button>
-      <hr/>
-      <button type="button" name="buttonAdd" @click="add({a:10})">map=>加十个个</button><!-- 传值的话只需要在括号里传，但要注意格式 -->
-      <button type="button" name="buttonAdd" @click="minus">map=>减一个</button>
-      <hr/>
-      <button type="button" name="buttonAdd" @click="addPlus">addPlus =>加二个</button>
-      <button type="button" name="buttonAdd" @click="minusPlus">minusPlus</button>
-      <hr>
-      A模块组中的num => {{  count }} => {{ countNew }}
-      <br>
-      B模块组中的num => {{  $store.state.b.numB }}
-      <div>
-        <P>通过属性访问：{{doneTodosCount}}</p>
-        <P>通过方法访问：{{todos}}</p>
-      </div>
-    </div>
+    <!--<Index></Index>-->
+    <!--<HelloWorld></HelloWorld>-->
+    <!--&lt;!&ndash;<Indexs></Indexs>&ndash;&gt;-->
+    <!--<div class="">-->
+      <!--<button type="button" name="buttonAdd" @click="$store.commit('add',{a:5})">加五个</button>&lt;!&ndash; vue2.0  的写法 &ndash;&gt;-->
+      <!--<button type="button" name="buttonAdd" @click="$store.commit('minus')">减一个</button>-->
+      <!--<hr/>-->
+      <!--<button type="button" name="buttonAdd" @click="add({a:10})">map=>加十个个</button>&lt;!&ndash; 传值的话只需要在括号里传，但要注意格式 &ndash;&gt;-->
+      <!--<button type="button" name="buttonAdd" @click="minus">map=>减一个</button>-->
+      <!--<hr/>-->
+      <!--<button type="button" name="buttonAdd" @click="addPlus">addPlus =>加二个</button>-->
+      <!--<button type="button" name="buttonAdd" @click="minusPlus">minusPlus</button>-->
+      <!--<hr>-->
+      <!--A模块组中的num => {{  count }} => {{ countNew }}-->
+      <!--<br>-->
+      <!--B模块组中的num => {{  $store.state.b.numB }}-->
+      <!--<div>-->
+        <!--<P>通过属性访问：{{doneTodosCount}}</p>-->
+        <!--<P>通过方法访问：{{todos}}</p>-->
+      <!--</div>-->
+    <!--</div>-->
   </div>
 </template>
 

@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>节流</title>
+		<style type="text/css">
+			div{
+				height: 5000px;
+			}
+		</style>
+	</head>
+	<body>
+		<div>
+			节流，节流，节流
+		</div>
+		<script type="text/javascript">
+			window.onload = function(){
+				window.addEventListener('scroll',throttleHandle(throttle),false);
+			}
+			
+			function throttleHandle(fn){
+				let timer = null;
+				booleanVal = true;
+				return function(){
+					if(!booleanVal){
+						return;
+					}
+					booleanVal = false;
+					timer = setTimeout(function(){
+						fn.apply(this,arguments);
+						booleanVal = true;
+					},2000)
+				}
+			}
+			
+			function throttle(){
+				var scrollNum = document.documentElement.scrollTop || document.body.scrollTop;
+				console.log(scrollNum)
+			}
+		</script>
+	</body>
+</html>
