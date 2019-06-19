@@ -3,6 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    <style>
+        .color{
+            color: red;
+            color: white;
+        }
+    </style>
 </head>
 <body>
 <script src="./jquery-3.3.1.min.js"></script>
@@ -13,7 +19,7 @@
     <input id="check3" class="check" type="checkbox"><label for="check3">6</label>
 </div>
 <div style="position: relative">
-    <span style="display: inline-block;width: 68px;top: 0;left: 0;border: 1px solid red;text-align: center;background-color: red">导出</span>
+    <span class="color" style="display: inline-block;width: 68px;top: 0;left: 0;border: 1px solid red;text-align: center;background-color: red">导出</span>
     <input style="width: 70px;position: absolute;top: 0;left: 0;opacity: 0" onchange="submit()" c id="file" type="file">
     <!--<button onclick="submit()">提交</button>-->
     <img id="img" src="" alt="">

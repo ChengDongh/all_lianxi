@@ -14,7 +14,7 @@
   <swiper wx:if="{{banners && banners.length>0}}" autoplay indicator-dots indicator-color="white" circular class="swiper" indicator-active-colo="#FFFFFF">
     <block wx:for="{{banners}}" wx:key="{{item}}">
       <swiper-item>
-        <navigator url="/pages/product/product?id={{item.target_id}}" hover-class="navigator-hover">
+        <navigator url="/pages/product/product?id={{item.targetId}}" hover-class="navigator-hover">
           <image mode="aspectFill" src="{{ item.pic }}"></image>
         </navigator>
       </swiper-item>
@@ -39,7 +39,7 @@
             <image src="../resource/image/timepri.png" class='timepri'></image>
           </view>
           <text class="kredcolor">￥{{item.price}}</text>
-          <text class="pre">¥{{item.pre_price}}</text>
+          <text class="pre">¥{{item.prePrice}}</text>
         </view>
       </view>
     </navigator>

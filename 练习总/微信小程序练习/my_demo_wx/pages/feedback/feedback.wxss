@@ -42,3 +42,14 @@
   right: -6rpx;
   z-index: 999;
 }
+.cart_sure {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 98rpx;
+  background: #FC911D;
+  color: #fff;
+  font-size: 36rpx;
+  border-radius: 0;
+}

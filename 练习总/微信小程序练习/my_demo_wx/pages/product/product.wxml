@@ -3,7 +3,7 @@
   <view>
     <swiper indicator-dots class='swiper' current='{{current}}'>
       <swiper-item wx:for="{{images_0}}" wx:for-item="item" wx:key="{{index}}" wx:for-index="index">
-        <image class='slider_img' mode='aspectFill' src="{{item.image}}"></image>
+        <image class='slider_img' mode='aspectFill' src="{{item}}"></image>
       </swiper-item>
     </swiper>
   </view>
@@ -19,12 +19,12 @@
   </view>
   <view class='product_price'>
     <text class='product_price_label'>￥{{product.price}}</text>
-    <text class='propose_price_label'>￥{{product.pre_price}}</text>
+    <text class='propose_price_label'>￥{{product.prePrice}}</text>
   </view>
   <view class='product_freight'>
-    <text>运费：免运费</text>
-    <text>剩余：{{product.num}}</text>
-    <text>销量：{{product.nownumber}}</text>
+    <text>运费：{{product.freight}}</text>
+    <text>剩余：{{product.inventory}}</text>
+    <text>销量：{{product.nowNumber}}</text>
   </view>
   <view class='product-icon' bindtap='shopcover'>
     <view>
@@ -43,7 +43,6 @@
   <view class='product-page'>
     <view class='product-page-title'>
       <text data-index="0" class="{{pagesshow == 0?'page-active':''}}" bindtap='pagechange'>商品详情</text>
-      <text data-index="1" class="{{pagesshow == 0?'':'page-active'}}" bindtap='pagechange'>商品评价</text>
     </view>
     <view wx:if="{{pagesshow == 0}}" class='page1'>
       <image wx:for="{{images}}" wx:key="{{index}}" src="{{item}}" mode="widthFix"></image>
@@ -137,7 +136,7 @@
       </view>
       <view class='classify'>
         <view>
-          <text wx:if="{{product.param1!=''}}">{{product.param1}}:</text>
+          <text class='param1_text' wx:if="{{product.param1!=''}}">{{product.param1}}:</text>
           <view class='skulist'>
             <button class="{{skuindex1==index&&item.disabled==1?'active':''}}" disabled='{{item.disabled==0}}' bindtap='changeparam1' data-index="{{index}}" wx:key="{{index}}" wx:for="{{product.param1s}}">{{item.title}}</button>
           </view>

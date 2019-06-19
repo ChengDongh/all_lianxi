@@ -6,14 +6,13 @@ const path = require('path')
 const  devEnv = require('./dev.env')
 module.exports = {
   dev: {
-
     // Paths
     assetsSubDirectory: 'static',
     assetsPublicPath: '/',
     // 代理列表, 是否开启代理通过[./dev.env.js]配置
     proxyTable: devEnv.OPEN_PROXY === false?{}:{
       '/proxyApi':{
-        target:'http://www.baidu.com',// 接口域名
+        target:'http://yiapi.qiqiangkeji.com',// 接口域名
         changeOrigin:true,//是否跨域
         pathRewrite:{
           '^/proxyApi':'/'//重定向 把 /proxyApi 开头替换成 /

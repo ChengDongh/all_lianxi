@@ -1,49 +1,51 @@
-// pages/orderList/orderList.js
+var WxNotificationCenter = require("../../utils/WxNotificationCenter.js")
 Page({
 
   /**
    * 页面的初始数据
    */
   data: {
+    openid: '',
+    page: 1,
     orders: [{
         id: 0,
-        orderState: 5,
+        orderState: 0,
         title: "全部",
         bar_color: "bar_color",
-        orders: [],
-
       },
       {
         id: 1,
         orderState: 1,
         title: "待付款",
         bar_color: "unbar_color",
-        orders: []
       },
       {
         id: 2,
-        orderState: 0,
+        orderState: 9,
+        title: "已取消",
         bar_color: "unbar_color",
-        title: "待发货",
-        orders: []
       },
       {
         id: 3,
-        orderState: 5,
+        orderState: 4,
         bar_color: "unbar_color",
-        title: "已发货",
-        orders: []
+        title: "待发货",
       },
       {
         id: 4,
+        orderState: 5,
+        bar_color: "unbar_color",
+        title: "已发货",
+      },
+      {
+        id: 5,
         orderState: 10,
         bar_color: "unbar_color",
         title: "已完成",
-        orders: []
       }
     ],
-    currentOrder: null,
-    id: null,
+    currentOrder: [],
+    status: 0,
     isBack: 'true',
   },
 
@@ -58,22 +60,28 @@ Page({
     }
     this.setData({
       id: 0,
+      openid: wx.getStorageSync('openid')
     })
+    this.loadData()
   },
   //头部的tabbar
   selectBar: function(e) {
     var orders = this.data.orders;
+    var status = e.currentTarget.dataset.id;
     for (let value of orders) {
-      if (value.id != e.currentTarget.dataset.id) {
+      if (value.orderState != e.currentTarget.dataset.id) {
         value.bar_color = 'unbar_color';
       } else {
         value.bar_color = 'bar_color';
       }
     }
     this.setData({
-      orders
+      page: 1,
+      orders,
+      status,
+      currentOrder: [],
     })
-    this.updateCurrentOrder(e.currentTarget.dataset.id);
+    this.loadData();
   },
   //再来一单
   go_back: function(e) {
@@ -92,13 +100,13 @@ Page({
       success: function() {
         if (that.data.isBack == 'true') {
           that.setData({
-            isBack:'false'
+            isBack: 'false'
           })
           wx.navigateBack({
             delta: 1
           })
         } else {
-          wx.redirectTo({
+          wx.navigateTo({
             url: '/pages/placeorder/palceorder',
           })
         }
@@ -115,193 +123,217 @@ Page({
   /**
    * 生命周期函数--监听页面显示
    */
-  onShow: function() {//默认首次加载的是全部的订单
-
-    var orders = this.data.orders;
-    var ordersStorage = wx.getStorageSync('allOrder');//获取所以的订单
-    console.log(ordersStorage)
-    if (ordersStorage.length>0){
-      function sortprice(a, b) {
-        return b.orderID - a.orderID
-      };
-      ordersStorage.sort(sortprice);
-    }
-    for (let value of ordersStorage) {
-      for (let val of orders) {
-        if (val.orderState == value.state) {
-          val.orders.push(value);
-        }
-      }
-    }
-    orders[this.data.id].orders = ordersStorage;
-    this.setData({
-      orders
-    })
-    this.updateCurrentOrder(this.data.id);
+  onShow: function() {
+    WxNotificationCenter.addNotification("changeorder", this.getoptions, this);
   },
-  updateCurrentOrder: function(id) {//tabbar切换时加载的数据
-    this.setData({
-      currentOrder: null,
-      id: null
-    })
+  updateBtn:function(e){
     wx.showLoading({
-      title: '加载中...',
+      title: '加载中',
     })
-    var currentOrder = this.data.currentOrder;
-    currentOrder = this.data.orders[id].orders;
-    setTimeout(() => {
-      wx.hideLoading();
-      this.setData({
-        currentOrder,
-        id
-      })
-    }, 1000)
+    var that = this;
+    wx.request({
+      url: 'http://hisin.natapp1.cc/order/updateStatus',
+      method: 'POST',
+      data: {
+        openid: that.data.openid,
+        orderNum: e.currentTarget.dataset.index,
+        status:10
+      },
+      header: {
+        'content-type': 'application/x-www-form-urlencoded'
+      },
+      success: function (res) {
+        wx.hideLoading();
+        if (res.data.code == 200) {
+          that.setData({
+            page:1,
+            currentOrder:[],
+          })
+          that.loadData()
+        } else {
+          wx.showToast({
+            title: res.data.msg,
+            icon: 'none'
+          })
+        }
+      },
+      fail: function (err) {
+        console.log(err)
+      }
+    })
   },
+  getoptions:function(){
+    this.setData({
+      page:1,
+      currentOrder:[]
+    })
+    this.loadData();
+  },
+  loadData: function() {
+    var that = this;
+    var currentOrder = that.data.currentOrder
+    wx.showLoading({
+      title: '加载中',
+    })
+    wx.request({
+      url: 'http://hisin.natapp1.cc/order/getOrders',
+      method: 'POST',
+      data: {
+        openid: that.data.openid,
+        status: that.data.status,
+        page: that.data.page,
+        orderId: 0
+      },
+      header: {
+        'content-type': 'application/x-www-form-urlencoded'
+      },
+      success: function(res) {
+        wx.hideLoading();
+        if (res.data.code == 200) {
+          currentOrder.push(...res.data.data)
+          that.setData({
+            currentOrder
+          })
+        } else {
+          wx.showToast({
+            title: res.data.msg,
+            icon:'none'
+          })
+        }
+      },
+      fail: function(err) {
+        console.log(err)
+      }
+    })
+  },
+
   //取消订单
   cancelBtn: function(e) {
     var that = this;
     var index = e.currentTarget.dataset.index;
-    var currentOrder = that.data.currentOrder;
-    var ordersStorage = wx.getStorageSync('allOrder');
-    function sortprice(a, b) {
-      return b.orderID - a.orderID
-    };
-    ordersStorage.sort(sortprice);
-    var orders = that.data.orders
     wx.showModal({
-      title: '提示',
-      content: '取消订单？',
-      success(res) {
+      title: '取消订单',
+      content: '确认取消订单吗?',
+      success: function(res) {
         if (res.confirm) {
-          that.setData({
-            currentOrder: null
-          })
-          wx.showLoading({
-            title: '加载中...',
-          })
-          if (that.data.id == 0) {//如果是在全部的tabbar界面 改变订单的状态
-            for (let i in currentOrder) {
-              if (currentOrder[i].orderID == index) {
-                currentOrder[i].state = 2;
-                for (let val of ordersStorage) {
-                  if (val.orderID == index) {
-                    val.state = 2;
+          wx.request({
+            url: 'http://hisin.natapp1.cc/order/closeOrder',
+            method: 'POST',
+            data: {
+              openid: that.data.openid,
+              orderNum: index
+            },
+            header: {
+              'content-type': 'application/x-www-form-urlencoded'
+            },
+            success: function(res) {
+              if (res.data.code == 200) {
+                wx.showToast({
+                  title: res.msg,
+                  icon: 'success',
+                  duration: 1000,
+                  success: function() {
+                    setTimeout(function() {
+                      that.setData({
+                        page: 1,
+                        currentOrder: [],
+                      })
+                      that.loadData();
+                    }, 1000)
                   }
-                }
-              }
-            }
-          } else {//如果是在待支付的tabbar界面 改变订单的状态并将其删除
-            for (let i in currentOrder) {
-              if (currentOrder[i].orderID == index) {
-                currentOrder.splice(i, 1);
-                for (let val of ordersStorage) {
-                  if (val.orderID == index) {
-                    val.state = 2;
-                  }
-                }
-              }
-            }
-          }
-          wx.setStorage({//操作之后 更新所以订单的状态值（缓存）
-            key: 'allOrder',
-            data: ordersStorage,
-            success: function() {
-              setTimeout(() => {
-                that.cancel_bt();
-                that.setData({
-                  currentOrder
                 })
-                wx.hideLoading();
-              }, 1000)
+
+              } else {
+                wx.showToast({
+                  title: res.data.msg,
+                  icon: 'none'
+                })
+              }
+            },
+            fail: function(err) {
+              console.log(err)
             }
           })
         }
       }
-    })
-  },
-  cancel_bt: function () {//获取所以订单的最新缓存 改变数据
-    var orders = this.data.orders;
-    var ordersStorage = wx.getStorageSync('allOrder');
-
-    function sortprice(a,b) {
-      return b.orderID - a.orderID
-    };
-    ordersStorage.sort(sortprice);
-    for (let val of orders) {
-      val.orders = [];
-    }
-    for (let value of ordersStorage) {
-      for (let val of orders) {
-        if (val.orderState == value.state) {
-          val.orders.push(value);
-        }
-      }
-    }
-    orders[0].orders = ordersStorage;
-    this.setData({
-      orders
     })
   },
   //确定支付
   confirmBtn: function(e) {
-    var that = this;
-    var index = e.currentTarget.dataset.index;
-    var currentOrder = that.data.currentOrder;
-    var ordersStorage = wx.getStorageSync('allOrder');
-    
-    function sortprice(a, b) {
-      return b.orderID - a.orderID
-    };
-    ordersStorage.sort(sortprice);
-    wx.showModal({
-      title: '提示',
-      content: '确定支付？',
-      success(res) {
-        if (res.confirm) {
-          that.setData({
-            currentOrder: null
-          })
-          wx.showLoading({
-            title: '加载中...',
-          })
-          if (that.data.id == 0) {//如果是在全部的tabbar界面 改变订单的状态
-            for (let i in currentOrder) {
-              if (currentOrder[i].orderID == index) {
-                currentOrder[i].state = 0;
-                for (let val of ordersStorage) {
-                  if (val.orderID == index) {
-                    val.state = 0;
-                  }
-                }
-              }
-            }
-          } else {
-            for (let i in currentOrder) {//如果是在待支付的tabbar界面 改变订单的状态并将其删除
-              if (currentOrder[i].orderID == index) {
-                currentOrder.splice(i, 1)
-                for (let val of ordersStorage) {
-                  if (val.orderID == index) {
-                    val.state = 0;
-                  }
-                }
-              }
-            }
-          }
+    let that = this;
+    var orderId = e.currentTarget.dataset.index;
+    var product;
+    for (let i of that.data.currentOrder){
+      if (i.order.id == orderId){
+        product = i;
+        break;
+      }
+    }
+    var cart = [];
+    for (let i of product.orderDetailVo) {
+      cart.push({
+        num: i.orderDetail.quantity,
+        id: i.orderDetail.skuId
+      });
+    }
 
-          wx.setStorage({
-            key: 'allOrder',
-            data: ordersStorage,
-            success: function() {
-              that.cancel_bt();
-              setTimeout(() => {
-                that.setData({
-                  currentOrder
+    var data = {
+      openid: that.data.openid,
+      addressId: product.address.id,
+      comment: product.order.userNote,
+      cart: cart,
+      notifyFlag: product.order.notifyFlag,
+      payPrice: product.order.payPrice,
+      orderNum: product.order.orderNum
+    }
+    wx.request({
+      url: 'http://hisin.natapp1.cc/order/createOrder',
+      method: 'POST',
+      data: JSON.stringify(data),
+      header: {
+        'content-type': 'application/json'
+      },
+      success: function (res) {
+        if (res.data.code == 200) {
+          let timeStamp = String(res.data.data.timeStamp); //时间戳
+          let nonceStr = res.data.data.nonceStr; //随机字符串
+          let packages = res.data.data.wxOrderPrepayId; //返回的订单id
+          let paySign = res.data.data.paySign;
+          let signType = res.data.data.signType;
+          wx.requestPayment({
+            'timeStamp': timeStamp,
+            'nonceStr': nonceStr,
+            'package': packages, 
+            'signType': signType,
+            'paySign': paySign,
+            'success': function (res) {
+              if (res.errMsg == 'requestPayment:ok') {
+                wx.showToast({
+                  title: '支付成功',
+                  icon: 'success',
+                  duration: 2000,
+                  success:function(res){
+                    this.setData({
+                      page: 1,
+                      currentOrder: []
+                    })
+                    that.loadData();
+                  }
                 })
-                wx.hideLoading();
-              }, 1000)
+              }
+            },
+            'fail': function (res) {
+              wx.showToast({
+                title: '支付失败',
+                icon: 'none',
+                duration: 2000,
+              })
             }
           })
         }
+      },
+      fail: function (err) {
+        console.log(err)
       }
     })
   },
@@ -323,14 +355,23 @@ Page({
    * 页面相关事件处理函数--监听用户下拉动作
    */
   onPullDownRefresh: function() {
-
+    this.setData({
+      page: 1,
+      currentOrder: []
+    })
+    this.loadData()
   },
 
   /**
    * 页面上拉触底事件的处理函数
    */
   onReachBottom: function() {
-
+    let page = this.data.page;
+    page++;
+    this.setData({
+      page: page
+    })
+    this.loadData();
   },
 
   /**

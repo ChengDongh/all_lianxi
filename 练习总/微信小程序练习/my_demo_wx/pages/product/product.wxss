@@ -48,11 +48,13 @@
   width: 15%;
   text-align: center;
   vertical-align: top;
+
 }
 
 .product_kj button {
   border: none;
   display: inline-block;
+  padding-right: 0;
 }
 
 .product_name image {

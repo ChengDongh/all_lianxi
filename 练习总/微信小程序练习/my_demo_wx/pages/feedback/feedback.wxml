@@ -1,7 +1,7 @@
 <!--pages/feedback/feedback.wxml-->
 <view class='feedback'>
   <view class='textarea'>
-    <textarea placeholder="如有意见，可以反馈给我~~" placeholder-style="color:#666666;"></textarea>
+    <textarea placeholder="如有意见，可以反馈给我~~" placeholder-style="color:#666666;" value='{{content}}' bindinput='changInput'></textarea>
   </view>
   <view class='image_content'>
     <view class='image_header'>
@@ -19,4 +19,5 @@
       </view>
     </view>
   </view>
+  <button disabled="{{summitDisable}}" class="cart_sure" bindtap="summit">提交反馈</button>
 </view>

@@ -5,8 +5,11 @@ Page({
    * 页面的初始数据
    */
   data: {
+    openid:'',
     src:[],
     num:0,
+    summitDisable:true,
+    content:''
   },
   upload:function(){
     var that = this;
@@ -16,7 +19,6 @@ Page({
       sourceType: ['album', 'camera'],
       success(res) {
         var tempFilePaths = res.tempFilePaths
-        // console.log(tempFilePaths)
         wx.uploadFile({
           url: 'https://yiapi.qiqiangkeji.com/upload',
           filePath: tempFilePaths[0],
@@ -36,6 +38,61 @@ Page({
 
           }
         })
+      }
+    })
+  },
+  changInput:function(e){
+    this.setData({
+      content: e.detail.value
+    })
+    if (this.data.content.trim() !=''){
+      this.setData({
+        summitDisable:false
+      })
+    }else{
+      this.setData({
+        summitDisable: true
+      })
+    }
+  },
+  summit:function(){
+    var that = this;
+    wx.showLoading({
+      title: '提交中...',
+    })
+    wx.request({
+      url: 'http://hisin.natapp1.cc/feedback/createFeedback',
+      method:'POST',
+      data:{
+        openid: that.data.openid,
+        content: that.data.content,
+        images: that.data.src,
+      },
+      header: {
+        'content-type': 'application/x-www-form-urlencoded'
+      },
+      success: function (res) {
+        wx.hideLoading();
+        if (res.data.code == 200) {
+          wx.showToast({
+            title: '成功',
+            icon: 'success',
+            duration: 1000
+          })
+          that.setData({
+            content:'',
+            src:[],
+            summitDisable:true
+          })
+        } else {
+          wx.showToast({
+            title: res.data.msg,
+            icon: 'none'
+          })
+        }
+      },
+      fail: function (err) {
+        console.log(err)
       }
     })
   },
@@ -60,7 +117,9 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-
+    this.setData({
+      openid: wx.getStorageSync('openid')
+    })
   },
 
   /**

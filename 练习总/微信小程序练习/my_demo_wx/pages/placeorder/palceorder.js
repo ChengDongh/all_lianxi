@@ -6,52 +6,153 @@ Page({
    * 页面的初始数据
    */
   data: {
-    currentExpress: {},//地址信息
+    openid: '',
+    changeaddressid: '',
+    currentExpress: {}, //地址信息
     addressInfo: false,
+    address_id: '',
     total: 0,
     total_a: 0,
-    provinces: [{
-      id: 0,
-      provinces: '河南省'
-    }, {
-      id: 1,
-      provinces: '四川省'
-    }],
-    citys: [{
-      id: 0,
-      citys: '信阳'
-    }, {
-      id: 1,
-      citys: '驻马店'
-    }],
-    districts: [{
-      id: 0,
-      districts: '潢川'
-    }, {
-      id: 1,
-      districts: '光山'
-    }],
+    provinces: [],
+    citys: [],
+    districts: [],
     index: [],
     show: false,
     product: [],
     id: null,
-    coupon: 0,
-    couponId: 0,
+    defaultCheck: 1,
+    freight: 0,
+    notifyFlag: 1,
+    comment: '',
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function(options) {
-    var couponInfo = {};
-    couponInfo.couponId = 0;
-    couponInfo.pic = 0;
-    wx.setStorage({
-      key: 'choose_coupon',
-      data: couponInfo,
+    this.setData({
+      openid: wx.getStorageSync('openid')
+    })
+    this.getProvince();
+  },
+  getoptions: function(options) {
+    let changeaddressid = options.addressid;
+    this.setData({
+      changeaddressid
     })
   },
+  getProvince: function() {
+    var that = this;
+    wx.request({
+      url: 'http://hisin.natapp1.cc/address/getProvince',
+      method: 'POST',
+      data: {
+        openid: that.data.openid,
+      },
+      header: {
+        'content-type': 'application/x-www-form-urlencoded'
+      },
+      success: function(res) {
+        if (res.data.code == 200) {
+          that.setData({
+            provinces: res.data.data,
+            index: [0, 0, 0]
+          })
+          that.getCity();
+        } else {
+          wx.showModal({
+            title: '提示',
+            content: res.data.msg,
+          })
+        }
 
+      },
+      fail: function(err) {
+        console.log(err)
+      }
+    })
+  },
+  getCity: function() {
+    var that = this;
+    var provinces = that.data.provinces;
+    var inde = that.data.index;
+    new Promise(function(resolve, reject) {
+      wx.request({
+        url: 'http://hisin.natapp1.cc/address/getCity',
+        method: 'POST',
+        data: {
+          openid: that.data.openid,
+          provinceId: provinces[inde[0]].provinceId
+        },
+        header: {
+          'content-type': 'application/x-www-form-urlencoded'
+        },
+        success: function(res) {
+          if (res.data.code == 200) {
+            that.setData({
+              citys: res.data.data,
+            })
+            resolve(res.data.data[inde[1]].cityId)
+          } else {
+            wx.showModal({
+              title: '提示',
+              content: res.data.msg,
+            })
+          }
+
+        },
+      })
+    }).then(function(cityId) {
+      wx.request({
+        url: 'http://hisin.natapp1.cc/address/getArea',
+        method: 'POST',
+        data: {
+          openid: that.data.openid,
+          cityId: cityId
+        },
+        header: {
+          'content-type': 'application/x-www-form-urlencoded'
+        },
+        success: function(res) {
+          if (res.data.code == 200) {
+            that.setData({
+              districts: res.data.data,
+            })
+          } else {
+            wx.showModal({
+              title: '提示',
+              content: res.data.msg,
+            })
+          }
+        },
+        fail: function(err) {
+          console.log(err)
+        }
+      })
+    })
+  },
+  switch1Change: function(e) {
+    var defaultCheck = this.data.defaultCheck
+    if (e.detail.value == true) {
+      defaultCheck = 1
+    } else {
+      defaultCheck = 0
+    }
+    this.setData({
+      defaultCheck
+    })
+  },
+  switch2Change: function(e) {
+    var notifyFlag = this.data.notifyFlag
+    if (e.detail.value == true) {
+      notifyFlag = 1
+    } else {
+      notifyFlag = 0
+    }
+    this.setData({
+      notifyFlag
+    })
+  },
   /**
    * 生命周期函数--监听页面初次渲染完成
    */
@@ -93,6 +194,7 @@ Page({
         index: [value[0], value[1], value[2]]
       })
     }
+    this.getCity();
   },
   //关闭打开select
   selectCity: function() {
@@ -106,18 +208,21 @@ Page({
     var index = this.data.index;
     var show = this.data.show;
     var currentExpress = this.data.currentExpress;
-    if (index.length > 0) {
-      currentExpress.province = this.data.provinces[index[0]].provinces;
-      currentExpress.city = this.data.citys[index[1]].citys;
-      currentExpress.area = this.data.districts[index[2]].districts;
-    } else {
-      currentExpress.province = this.data.provinces[0].provinces;
-      currentExpress.city = this.data.citys[0].citys;
-      currentExpress.area = this.data.districts[0].districts;
-    }
+    currentExpress.province = this.data.provinces[index[0]].provinceName;
+    currentExpress.provinceId = this.data.provinces[index[0]].provinceId;
+    currentExpress.city = this.data.citys[index[1]].cityName;
+    currentExpress.cityId = this.data.citys[index[1]].cityId;
+    currentExpress.area = this.data.districts[index[2]].area;
+    currentExpress.areaId = this.data.districts[index[2]].areaId;
     this.setData({
       currentExpress,
       show: !show
+    })
+  },
+  addMessage: function(e) {
+    var comment = e.detail.value;
+    this.setData({
+      comment
     })
   },
   //保存收货人信息
@@ -139,93 +244,183 @@ Page({
         content: message,
       })
     } else {
-      var currentExpress = this.data.currentExpress;
-      wx.setStorage({
-        key: 'addresssInfoALL',
-        data: [currentExpress]
-      })
-      this.setData({
-        addressInfo: true
+      var currentExpress = that.data.currentExpress;
+      wx.request({
+        url: 'http://hisin.natapp1.cc/address/saveOrUpdateAddress',
+        method: 'POST',
+        data: {
+          openid: that.data.openid,
+          id: that.data.address_id,
+          name: that.data.currentExpress.name,
+          mobile: that.data.currentExpress.mobile,
+          location: that.data.currentExpress.location,
+          provinceId: that.data.currentExpress.provinceId,
+          province: that.data.currentExpress.province,
+          cityId: that.data.currentExpress.cityId,
+          city: that.data.currentExpress.city,
+          areaId: that.data.currentExpress.areaId,
+          area: that.data.currentExpress.area,
+          defaultCheck: that.data.defaultCheck,
+          discarded: '',
+        },
+        header: {
+          'content-type': 'application/x-www-form-urlencoded'
+        },
+        success: function(res) {
+          if (res.data.code == 200) {
+            that.getAddress();
+            that.setData({
+              addressInfo: true
+            })
+          } else {
+            wx.showModal({
+              title: '提示',
+              content: res.data.msg,
+            })
+          }
+        },
+        fail: function(err) {
+          console.log(err)
+        }
       })
     }
   },
   /**
    * 生命周期函数--监听页面显示
    */
-  choose_coupon: function() {
-    wx.navigateTo({
-      url: '/pages/coupon/coupon',
-    })
-  },
+
   onShow: function() {
-    console.log(1111)
     var that = this;
-    that.setData({
-      coupon: 0,
-      couponId: 0
-    })
-    var addresssStorage = wx.getStorageSync('addresssInfo');//地址信息
-    var addresssStorageALL = wx.getStorageSync('addresssInfoALL');//所以的地址信息
-    var couponStorage = wx.getStorageSync('choose_coupon');//选择的优惠券
-    console.log(couponStorage)
-    if (couponStorage) {//（如果优惠券页面中点击了优惠券）是否存在优惠券
-      that.setData({
-        coupon: couponStorage.pic,
-        couponId: couponStorage.couponId
-      })
-    }
-    console.log(this.data.coupon)
-    if (addresssStorage && addresssStorageALL) {//判断是否是已经选过地址了
-      that.setData({
-        currentExpress: addresssStorage,
-        addressInfo: true
-      })
+    WxNotificationCenter.addNotification("changeaddressid", that.getoptions, that);
+    if (that.data.changeaddressid) {
+      that.getAddressAll();
     } else {
-      if (addresssStorageALL) {//如果是没有选过地址 切设置过地址 默认选择第一个 
-        wx.getStorage({
-          key: 'addresssInfoALL',
-          success: function(res) {
-            if (res.data.length > 0) {
-              that.setData({
-                currentExpress: res.data[0],
-                addressInfo: true
-              })
-            } else {
-              that.setData({
-                addressInfo: false,
-                currentExpress: {}
-              })
-            }
-          },
-        })
-      } else {//如果是没有选过地址 切没有设置过地址 开始设置地址
-        that.setData({
-          addressInfo: false,
-          currentExpress: {}
-        })
-      }
+      that.getAddress();
     }
-    wx.getStorage({//获取结算商品的信息
+    wx.getStorage({ //获取结算商品的信息
       key: 'orderInfo',
       success: function(res) {
         var total = 0;
         var total_a = that.data.total_a;
+        var freight = that.data.freight;
         for (let i of res.data) {
-          total = total + Number(i.sku.price) * i.num
+          total = total + Number(i.sku.price) * i.num;
+          freight = freight + Number(i.freight);
         }
-        total_a = total - that.data.coupon
+        total_a = total;
         that.setData({
           product: res.data,
           total: total.toFixed(2),
           total_a: total_a.toFixed(2),
+          freight: 10,
         })
       },
     })
+  },
+  // 获取地址
+  getAddress: function() {
+    wx.showLoading({
+      title: '加载中',
+    })
+    var that = this;
+    wx.request({
+      url: 'http://hisin.natapp1.cc/address/getOneAddress',
+      method: 'POST',
+      data: {
+        openid: that.data.openid
+      },
+      header: {
+        'content-type': 'application/x-www-form-urlencoded'
+      },
+      success: function(res) {
+        wx.hideLoading();
+        var currentExpress = that.data.currentExpress
+        if (res.data.code == 200) {
+          if (res.data.data) {
+            currentExpress = res.data.data
+            that.setData({
+              addressInfo: true,
+              currentExpress,
+            })
+          } else {
+            that.getAddressAll()
+          }
+        } else {
+          wx.showModal({
+            title: '提示',
+            content: res.data.msg,
+          })
+        }
 
+      },
+      fail: function(err) {
+        console.log(err)
+      }
+    })
+  },
+  // 获取所有地址
+  getAddressAll: function() {
+    wx.showLoading({
+      title: '加载中',
+    })
+    var that = this;
+    wx.request({
+      url: 'http://hisin.natapp1.cc/address/getAllAddress',
+      method: 'POST',
+      data: {
+        openid: that.data.openid
+      },
+      header: {
+        'content-type': 'application/x-www-form-urlencoded'
+      },
+      success: function(res) {
+        wx.hideLoading();
+        var currentExpress = that.data.currentExpress
+        if (res.data.code == 200) {
+          var addressAll = res.data.data;
+          if (addressAll.length > 0) {
+            if (that.data.changeaddressid) {
+              for (let i in addressAll) {
+                if (addressAll[i].id == that.data.changeaddressid) {
+                  currentExpress = addressAll[i];
+                }
+              }
+            } else {
+              currentExpress = res.data.data[0]
+            }
+            that.setData({
+              addressInfo: true,
+              currentExpress
+            })
+          } else {
+            that.setData({
+              addressInfo: false,
+              currentExpress: {}
+            })
+          }
+        } else {
+          wx.showToast({
+            title: res.data.msg,
+            icon: 'none'
+          })
+        }
+
+      },
+      fail: function(err) {
+        console.log(err)
+      }
+    })
   },
   //支付
   payment_btn: function() {
     var that = this;
+    var cart = [];
+    for (let i of that.data.product) {
+      cart.push({
+        num: i.num,
+        id: i.sku.id
+      });
+    }
     if (that.data.addressInfo == false) {
       wx.showModal({
         title: '提示',
@@ -233,211 +428,72 @@ Page({
       })
       return false;
     }
-    wx.showModal({
-      title: '提示',
-      content: '确认支付？',
-      showCancel: true,
-      cancelText: '取消',
-      cancelColor: '',
-      confirmText: '确定',
-      confirmColor: '',
-      success: function(res) {
-        if (res.confirm) {
-          var total = that.data.total_a;
-          var state = 0;
-          var orderID = Math.round(new Date());
-          var obligationStorage = wx.getStorageSync('orderInfo');
-          var allOrderStorage = wx.getStorageSync('allOrder');
-          var chooselist = wx.getStorageSync('couponList');
-          var obligation = {};
-          obligation.content = obligationStorage;
-          obligation.orderID = orderID;
-          obligation.state = state;
-          obligation.total = total;
-          if (allOrderStorage) {
-            allOrderStorage.push(obligation)
-            wx.setStorage({
-              key: 'allOrder',
-              data: allOrderStorage,
-              success: function() {
-                wx.showToast({
-                  title: '支付成功',
-                })
-                wx.removeStorage({//删除选中的优惠券
-                  key: 'choose_coupon',
-                  success: function(res) {},
-                })
-                for (let i in chooselist) {
-                  if (chooselist[i].couponId == that.data.couponId) {
-                    chooselist.splice(i, 1)
-                  }
-                }
-                if (chooselist.length > 0) {//从优惠券库存中删除选择的优惠券
-                  wx.setStorage({
-                    key: 'couponList',
-                    data: chooselist,
-                  })
-                } else {
-                  wx.removeStorage({//优惠券库存只存在这一个优惠券 将优惠券库存缓存删除，（优惠券页面添加时重新设置库存缓存）
-                    key: 'couponList',
-                    success: function(res) {
-                      console.log('成功')
-                    },
-                  })
-                }
-                setTimeout(() => {
-                  that.setData({
-                    coupon: 0
-                  })
-                  wx.navigateTo({
-                    url: '/pages/orderList/orderList',
-                  })
-                }, 1000)
-              }
-            })
-          } else {
-            wx.setStorage({
-              key: 'allOrder',
-              data: [obligation],
-              success: function() {
-                wx.showToast({
-                  title: '支付成功',
-                })
-                wx.removeStorage({
-                  key: 'choose_coupon',
-                  success: function(res) {},
-                })
-                for (let i in chooselist) {
-                  if (chooselist[i].couponId == that.data.couponId) {
-                    chooselist.splice(i, 1)
-                  }
-                }
-                if (chooselist.length > 0) {
-                  wx.setStorage({
-                    key: 'couponList',
-                    data: chooselist,
-                  })
-                } else {
-                  wx.removeStorage({
-                    key: 'couponList',
-                    success: function(res) {
-                      console.log('成功')
-                    },
-                  })
-                }
-
-                setTimeout(() => {
-                  that.setData({
-                    coupon: 0
-                  })
-                  wx.navigateTo({
-                    url: '/pages/orderList/orderList',
-                  })
-                }, 1000)
-              }
-            })
-          }
-        } else if (res.cancel) {
-          var state = 1;
-          var total = that.data.total_a;
-          var orderID = Math.round(new Date());
-          var obligationStorage = wx.getStorageSync('orderInfo');
-          var allOrderStorage = wx.getStorageSync('allOrder');
-          var chooselist = wx.getStorageSync('couponList');
-          var obligation = {};
-          obligation.content = obligationStorage;
-          obligation.orderID = orderID;
-          obligation.state = state;
-          obligation.total = total;
-          if (allOrderStorage) {
-            allOrderStorage.push(obligation)
-            wx.setStorage({
-              key: 'allOrder',
-              data: allOrderStorage,
-              success: function() {
-                wx.showToast({
-                  title: '支付失败',
-                });
-                wx.removeStorage({
-                  key: 'choose_coupon',
-                  success: function(res) {},
-                })
-                for (let i in chooselist) {
-                  if (chooselist[i].couponId == that.data.couponId) {
-                    chooselist.splice(i, 1)
-                  }
-                }
-                if (chooselist.length > 0) {
-                  wx.setStorage({
-                    key: 'couponList',
-                    data: chooselist,
-                  })
-                } else {
-                  wx.removeStorage({
-                    key: 'couponList',
-                    success: function(res) {
-                      console.log('成功')
-                    },
-                  })
-                }
-
-                setTimeout(() => {
-                  that.setData({
-                    coupon: 0
-                  })
-                  wx.navigateTo({
-                    url: '/pages/orderList/orderList',
-                  })
-                }, 1000)
-              }
-            })
-          } else {
-            wx.setStorage({
-              key: 'allOrder',
-              data: [obligation],
-              success: function() {
-                wx.showToast({
-                  title: '支付失败',
-                })
-                wx.removeStorage({
-                  key: 'choose_coupon',
-                  success: function(res) {},
-                })
-                for (let i in chooselist) {
-                  if (chooselist[i].couponId == that.data.couponId) {
-                    chooselist.splice(i, 1)
-                  }
-                }
-                if (chooselist.length > 0) {
-                  wx.setStorage({
-                    key: 'couponList',
-                    data: chooselist,
-                  })
-                } else {
-                  wx.removeStorage({
-                    key: 'couponList',
-                    success: function(res) {
-                      console.log('成功')
-                    },
-                  })
-                }
-
-                setTimeout(() => {
-                  that.setData({
-                    coupon: 0
-                  })
-                  wx.navigateTo({
-                    url: '/pages/orderList/orderList',
-                  })
-                }, 1000)
-              }
-            })
-          }
-        }
-
+    var data = {
+      openid: that.data.openid,
+      addressId: that.data.currentExpress.id,
+      comment: that.data.comment,
+      cart: cart,
+      notifyFlag: that.data.notifyFlag,
+      payPrice: that.data.total,
+      orderNum:'',
+    }
+    wx.request({
+      url: 'http://hisin.natapp1.cc/order/createOrder',
+      method: 'POST',
+      data: JSON.stringify(data),
+      header: {
+        'content-type': 'application/json'
       },
-      fail: function(res) {},
-      complete: function(res) {},
+      success: function(res) {
+        if (res.data.code == 200) {
+          let timeStamp = String(res.data.data.timeStamp); //时间戳
+          let nonceStr = res.data.data.nonceStr; //随机字符串
+          let packages = res.data.data.wxOrderPrepayId; //返回的订单id
+          let paySign = res.data.data.paySign;
+          let signType = res.data.data.signType;
+          wx.requestPayment({
+            'timeStamp': timeStamp,
+            'nonceStr': nonceStr,
+            'package': packages,
+            'signType': signType,
+            'paySign': paySign,
+            'success': function(res) {
+              if (res.errMsg == 'requestPayment:ok') {
+                wx.showToast({
+                  title: '支付成功',
+                  icon: 'success',
+                  duration: 2000,
+                  success: function() {
+                    setTimeout(function() {
+                      wx.navigateTo({
+                        url: '/pages/orderList/orderList',
+                      })
+                    }, 1500)
+
+                  }
+                })
+              }
+            },
+            'fail': function(res) {
+              wx.showToast({
+                title: '支付失败',
+                icon: 'none',
+                duration: 2000,
+                success: function() {
+                  setTimeout(function() {
+                    wx.navigateTo({
+                      url: '/pages/orderList/orderList',
+                    })
+                  }, 1500)
+                }
+              })
+            }
+          })
+        }
+      },
+      fail: function(err) {
+        console.log(err)
+      }
     })
   },
   go_delivery: function() {

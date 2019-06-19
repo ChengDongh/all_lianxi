@@ -1,52 +1,135 @@
 // pages/address/address.js
 var utils = require("../../utils/util.js");
+var WxNotificationCenter = require("../../utils/WxNotificationCenter.js")
 Page({
 
   /**
    * 页面的初始数据
    */
   data: {
+    openid:'',
     show: false,
     currentExpress: {},
     index: [],
-    provinces: [{
-      id: 0,
-      provinces: '河南省'
-    }, {
-      id: 1,
-      provinces: '四川省'
-    }],
-    citys: [{
-      id: 0,
-      citys: '信阳'
-    }, {
-      id: 1,
-      citys: '驻马店'
-    }],
-    districts: [{
-      id: 0,
-      districts: '潢川'
-    }, {
-      id: 1,
-      districts: '光山'
-    }],
-    id: null,
+    provinces: [],
+    citys: [],
+    districts: [],
+    id: '',
+    defaultCheck:0,
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function(options) {
-    if (JSON.stringify(options)!= "{}"){//判断是否是从点击修改按钮跳转过来的
-      var currentExpress = wx.getStorageSync('addresssInfoALL')[options.id];
-      var id = options.id;
-      this.setData({
-        currentExpress,
-        id
-      })
+    let addressid = options.id ? options.id : '';
+    this.setData({
+      openid: wx.getStorageSync('openid'),
+      id: addressid
+    })
+    if (addressid){
+      this.getAddress();
+    }else{
+      this.getProvince();
     }
   },
-
+  getAddress:function(){
+    var that = this;
+    wx.request({
+      url: 'http://hisin.natapp1.cc/address/getAllAddress',
+      method: 'POST',
+      data: {
+        openid: that.data.openid,
+      },
+      header: {
+        'content-type': 'application/x-www-form-urlencoded'
+      },
+      success: function (res) {
+        if(res.data.code == 200){
+          var addressAll = res.data.data;
+          var currentExpress = that.data.currentExpress
+          for (let i in addressAll){
+            if (addressAll[i].id == that.data.id){
+              currentExpress = addressAll[i];
+            }
+          }
+          that.setData({
+            currentExpress
+          })
+        }
+      },
+      fail: function (err) {
+        console.log(err)
+      }
+    })
+  },
+  getProvince:function(){
+    var that = this;
+    wx.request({
+      url: 'http://hisin.natapp1.cc/address/getProvince',
+      method: 'POST',
+      data: {
+        openid: that.data.openid,
+      },
+      header: {
+        'content-type': 'application/x-www-form-urlencoded'
+      },
+      success: function (res) {
+       that.setData({
+         provinces:res.data.data,
+         index:[0,0,0]
+       })
+       that.getCity();
+      },
+      fail: function (err) {
+        console.log(err)
+      }
+    })
+  },
+  getCity:function(){
+    var that = this;
+    var provinces = that.data.provinces;
+    var inde = that.data.index;
+    new Promise(function(resolve,reject){
+      wx.request({
+        url: 'http://hisin.natapp1.cc/address/getCity',
+        method: 'POST',
+        data: {
+          openid: that.data.openid,
+          provinceId: provinces[inde[0]].provinceId
+        },
+        header: {
+          'content-type': 'application/x-www-form-urlencoded'
+        },
+        success: function (res) {
+          that.setData({
+            citys: res.data.data,
+          })
+          resolve(res.data.data[inde[1]].cityId)
+        },
+      })
+    }).then(function (cityId) {
+      wx.request({
+        url: 'http://hisin.natapp1.cc/address/getArea',
+        method: 'POST',
+        data: {
+          openid: that.data.openid,
+          cityId: cityId
+        },
+        header: {
+          'content-type': 'application/x-www-form-urlencoded'
+        },
+        success: function (res) {
+          that.setData({
+            districts: res.data.data,
+          })
+        },
+        fail: function (err) {
+          console.log(err)
+        }
+      })
+    })
+  },
   /**
    * 生命周期函数--监听页面初次渲染完成
    */
@@ -80,21 +163,23 @@ Page({
   },
   //select改变时触发
   bindChange: function(e) {
+    var that = this;
     var value = e.detail.value
-    var idx = this.data.index
+    var idx = that.data.index
     if (value[0] != idx[0]) {
-      this.setData({
+      that.setData({
         index: [value[0], 0, 0]
       })
     } else if (value[1] != idx[1]) {
-      this.setData({
+      that.setData({
         index: [value[0], value[1], 0]
       })
     } else if (value[2] != idx[2]) {
-      this.setData({
+      that.setData({
         index: [value[0], value[1], value[2]]
       })
     }
+    that.getCity();
   },
   //select选择器的开关
   selectCity: function() {
@@ -108,30 +193,39 @@ Page({
     var index = this.data.index;
     var show = this.data.show;
     var currentExpress = this.data.currentExpress;
-    if (index.length > 0) {
-      currentExpress.province = this.data.provinces[index[0]].provinces;
-      currentExpress.city = this.data.citys[index[1]].citys;
-      currentExpress.area = this.data.districts[index[2]].districts;
-    } else {
-      currentExpress.province = this.data.provinces[0].provinces;
-      currentExpress.city = this.data.citys[0].citys;
-      currentExpress.area = this.data.districts[0].districts;
-    }
+    currentExpress.province = this.data.provinces[index[0]].provinceName;
+    currentExpress.provinceId = this.data.provinces[index[0]].provinceId;
+    currentExpress.city = this.data.citys[index[1]].cityName;
+    currentExpress.cityId = this.data.citys[index[1]].cityId;
+    currentExpress.area = this.data.districts[index[2]].area;
+    currentExpress.areaId = this.data.districts[index[2]].areaId;
     this.setData({
       currentExpress,
       show: !show
     })
   },
+  switch1Change: function (e) {
+    var defaultCheck = this.data.defaultCheck
+    if (e.detail.value == true) {
+      defaultCheck = 1
+    } else {
+      defaultCheck = 0
+    }
+    this.setData({
+      defaultCheck
+    })
+  },
   //保存地址按钮
   saveAddress: function() {
+    var that = this;
     var message = '';
-    if (this.data.currentExpress.name == undefined) {
+    if (that.data.currentExpress.name == undefined) {
       message = '请输入姓名'
-    } else if (!utils.isphone(this.data.currentExpress.mobile)) {
+    } else if (!utils.isphone(that.data.currentExpress.mobile)) {
       message = '请输入正确的手机号'
-    } else if (this.data.currentExpress.province == undefined) {
+    } else if (that.data.currentExpress.province == undefined) {
       message = '请选择地区'
-    } else if (this.data.currentExpress.location == undefined) {
+    } else if (that.data.currentExpress.location == undefined) {
       message = '请填写详细地址'
     }
     if (message != '') {
@@ -140,56 +234,44 @@ Page({
         content: message,
       })
     } else {
-      var currentExpress = this.data.currentExpress;
-      var addresssStorage = wx.getStorageSync('addresssInfoALL')
-      if (this.data.id != null) {//通过是否是修改按钮跳转过来的 来判断保存之后的提示是修改成功或者是添加成功
-        if (addresssStorage){
-          addresssStorage[this.data.id] = currentExpress;
-          wx.setStorage({
-            key: 'addresssInfoALL',
-            data: addresssStorage,
-            success:function(){
-              wx.showToast({
-                title: '修改成功',
-              })
-              setTimeout(function(){
-                wx.navigateBack({
-                  delta: 1
-                })
-              },1000)
-            }
-          })
+      var currentExpress = that.data.currentExpress;
+      wx.request({
+        url: 'http://hisin.natapp1.cc/address/saveOrUpdateAddress',
+        method: 'POST',
+        data: {
+          openid: that.data.openid,
+          id: that.data.id,
+          name: that.data.currentExpress.name,
+          mobile: that.data.currentExpress.mobile,
+          location: that.data.currentExpress.location,
+          provinceId: that.data.currentExpress.provinceId,
+          province: that.data.currentExpress.province,
+          cityId: that.data.currentExpress.cityId,
+          city: that.data.currentExpress.city,
+          areaId: that.data.currentExpress.areaId,
+          area: that.data.currentExpress.area,
+          defaultCheck: that.data.defaultCheck,
+          discarded: '',
+        },
+        header: {
+          'content-type': 'application/x-www-form-urlencoded'
+        },
+        success: function (res) {
+          if (res.data.code == 200) {
+            wx.navigateBack({
+              delta: 1
+            })
+          } else {
+            wx.showToast({
+              title: res.data.msg,
+              icon: 'none'
+            })
+          }
+        },
+        fail: function (err) {
+          console.log(err)
         }
-      } else {
-        if (addresssStorage) {
-          addresssStorage.push(currentExpress)
-          wx.setStorage({
-            key: 'addresssInfoALL',
-            data: addresssStorage,
-            success: function() {
-              wx.showToast({
-                title: '添加成功',
-              })
-              wx.navigateBack({
-                delta: 1
-              })
-            }
-          })
-        } else {
-          wx.setStorage({
-            key: 'addresssInfoALL',
-            data: [currentExpress],
-            success: function() {
-              wx.showToast({
-                title: '添加成功',
-              })
-              wx.navigateBack({
-                delta: 1
-              })
-            }
-          })
-        }
-      }
+      })
     }
   },
   /**

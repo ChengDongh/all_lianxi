@@ -1,22 +1,18 @@
 {
   "pages": [
-    
     "pages/market/market",
-    "pages/lian/lian",
+    "pages/placeorder/palceorder",
+    "pages/delivery/delivery",
     "pages/coupon/coupon",
     "pages/orderList/orderList",
+    "pages/orderdetail/orderdetail",
     "pages/feedback/feedback",
-    "pages/delivery/delivery",
     "pages/address/address",
     "pages/my/my",
     "pages/shop_cart/shop_cart",
     "pages/product/product",
-    "pages/placeorder/palceorder",
     "pages/authorize/authorize",
-    "pages/collect/collect",
-    "pages/feedbacks/feedbacks"
-    
-    
+    "pages/collect/collect"
   ],
   "window": {
     "backgroundTextStyle": "light",

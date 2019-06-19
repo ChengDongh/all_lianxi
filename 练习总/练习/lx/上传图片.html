@@ -19,8 +19,7 @@
 		<img id="aaa" src="" alt="" />
 		<script type="text/javascript">
 			function upload(e) {
-
-				console.log(formData)
+				var formData = new FormData();
 				for(var i = 0; i < e.files.length; i++) {
 					formData.append("img", e.files[i]);
                     console.log(formData)

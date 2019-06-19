@@ -6,143 +6,165 @@ Page({
    * 页面的初始数据
    */
   data: {
-    hotSearch: [{
-      id: 0,
-      title: '推荐'
-    }, {
-      id: 1,
-      title: '居家百货'
-    }, {
-      id: 2,
-      title: '优雅女装'
-    }, {
-      id: 3,
-      title: '美容护肤'
-    }, {
-      id: 4,
-      title: '男士皮鞋'
-    }, {
-      id: 5,
-      title: '彩妆香氛'
-    }, {
-      id: 6,
-      title: '品牌特价'
-    }],
+    openid: '',
+    page: 1,
+    hotSearch: [],
     category_id: 0,
-    banners: [{
-      target_id: 0,
-      pic: '../resource/image/mybanner.png'
-    }, {
-      target_id: 1,
-      pic: '../resource/image/makemoneyimg.png'
-    }, {
-      target_id: 2,
-      pic: '../resource/image/mybanner.png'
-    }],
-    banners_1: [{
-      target_id: 0,
-      pic: '../resource/image/mybanner.png'
-    }, {
-      target_id: 1,
-      pic: '../resource/image/makemoneyimg.png'
-    }, {
-      target_id: 2,
-      pic: '../resource/image/mybanner.png'
-    }],
-    products: [{
-      id: 0,
-      title: '商品一',
-      image: '../resource/image/img1.png',
-      spec: '侧耳聆听，世界都变得安静，高清音质体验世界都变得安静，高清音质体验',
-      price: '266.50',
-      pre_price: '604.00'
-    }, {
-      id: 1,
-      title: '商品二',
-      image: '../resource/image/img2.png',
-      spec: '侧耳聆听，世界都变得安静，高清音质体验世界都变得安静，高清音质体验',
-      price: '266.50',
-      pre_price: '604.00'
-    }, {
-      id: 2,
-      title: '商品一',
-      image: '../resource/image/img1.png',
-      spec: '侧耳聆听，世界都变得安静，高清音质体验世界都变得安静，高清音质体验',
-      price: '266.50',
-      pre_price: '604.00'
-    }, {
-      id: 3,
-      title: '商品二',
-      image: '../resource/image/img2.png',
-      spec: '侧耳聆听，世界都变得安静，高清音质体验世界都变得安静，高清音质体验',
-      price: '266.50',
-      pre_price: '604.00'
-    }],
-    products_1: [{
-      id: 0,
-      title: '商品一',
-      image: '../resource/image/img1.png',
-      spec: '侧耳聆听，世界都变得安静，高清音质体验世界都变得安静，高清音质体验',
-      price: '266.50',
-      pre_price: '604.00'
-    }, {
-      id: 1,
-      title: '商品二',
-      image: '../resource/image/img2.png',
-      spec: '侧耳聆听，世界都变得安静，高清音质体验世界都变得安静，高清音质体验',
-      price: '266.50',
-      pre_price: '604.00'
-    }, {
-      id: 2,
-      title: '商品一',
-      image: '../resource/image/img1.png',
-      spec: '侧耳聆听，世界都变得安静，高清音质体验世界都变得安静，高清音质体验',
-      price: '266.50',
-      pre_price: '604.00'
-    }, {
-      id: 3,
-      title: '商品二',
-      image: '../resource/image/img2.png',
-      spec: '侧耳聆听，世界都变得安静，高清音质体验世界都变得安静，高清音质体验',
-      price: '266.50',
-      pre_price: '604.00'
-    }]
+    title: '',
+    banners: [],
+    products: [],
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function() {
-    console.log(11111)
+    var that = this;
+    app.getOpenid().then(function(res) {
+      if (res.status == 200) {
+        that.setData({
+          openid: wx.getStorageSync('openid')
+        })
+        that.loadData();
+        that.getHotSearch();
+        that.getBanner();
+      } else {
+        wx.showToast({
+          title: res.data.msg,
+          icon: 'none'
+        })
+      }
+    })
+  },
+  // 搜索
+  hotSearcht: function (e) {
+    let category_id = 0;
+    this.setData({
+      page: 1,
+      title: e.detail.value,
+      category_id,
+      products:[]
+    })
+    this.loadData();
   },
   //头部导航条
+  getHotSearch: function() {
+    var that = this;
+    wx.showLoading({
+      title: '加载中',
+    });
+    wx.request({
+      url: 'http://hisin.natapp1.cc/product/category',
+      method: 'POST',
+      data: {
+        openid: this.data.openid
+      },
+      header: {
+        'content-type': 'application/x-www-form-urlencoded'
+      },
+      success: function(res) {
+        wx.hideLoading();
+        if (res.data.code == 200) {
+          that.setData({
+            hotSearch: res.data.data
+          })
+        } else {
+          wx.showToast({
+            title: res.data.msg,
+            icon: 'none'
+          })
+        }
+        
+      },
+      fail: function(err) {
+        console.log(err)
+      }
+    })
+  },
   hotSearch(e) {
     let category_id = 0;
     let title = '';
     category_id = e.currentTarget.dataset.key.id;
     this.setData({
       category_id,
+      page:1,
+      title:'',
+      products: []
     })
     this.loadData();
   },
-  loadData: function() {
+  // 获取banner
+  getBanner: function() {
     var that = this;
-    that.setData({
-      products: [],
-      banners: []
-    });
     wx.showLoading({
       title: '加载中',
     });
-    setTimeout(() => {
-      var products = that.data.products_1;
-      var banners = that.data.banners_1;
-      that.setData({
-        products,
-        banners
-      });
-      wx.hideLoading();
-    }, 2000)
+    wx.request({
+      url: 'http://hisin.natapp1.cc/banner/all',
+      method: 'POST',
+      data: {
+        openid: this.data.openid,
+      },
+      header: {
+        'content-type': 'application/x-www-form-urlencoded'
+      },
+      success: function(res) {
+        wx.hideLoading();
+        if (res.data.code == 200) {
+          that.setData({
+            banners: res.data.data
+          })
+        } else {
+          wx.showToast({
+            title: res.data.msg,
+            icon: 'none'
+          })
+        }
+      },
+      fail: function(err) {
+        console.log(err)
+      }
+    })
+  },
+
+  // 商品列表
+  loadData: function() {
+    var that = this;
+    var products = that.data.products;
+    wx.showLoading({
+      title: '加载中',
+    });
+    wx.stopPullDownRefresh();
+    wx.request({
+      url: 'http://hisin.natapp1.cc/product/search',
+      method: 'POST',
+      data: {
+        page: this.data.page,
+        openid: this.data.openid,
+        categoryId: this.data.category_id,
+        title: this.data.title
+      },
+      header: {
+        'content-type': 'application/x-www-form-urlencoded'
+      },
+      success: function(res) {
+        wx.hideLoading();
+        if(res.data.code == 200){
+          products.push(...res.data.data);
+          that.setData({
+            products: products
+          })
+        }else{
+          wx.showToast({
+            title: res.data.msg,
+            icon: 'none'
+          })
+        }
+      },
+      fail: function(err) {
+        console.log(err)
+      }
+    })
   },
   /**
    * 生命周期函数--监听页面初次渲染完成
@@ -176,45 +198,37 @@ Page({
    * 页面相关事件处理函数--监听用户下拉动作
    */
   onPullDownRefresh: function() {
-    console.log(2222)
-    wx.showLoading({
-      title: '加载中',
+    this.setData({
+      products: [],
+      page:1,
+      title:'',
     });
-    setTimeout(() => {
-      var products = this.data.products_1;
-      this.setData({
-        products
-      });
-      wx.hideLoading();
-      wx.stopPullDownRefresh();
-    }, 2000)
+    this.loadData();
+    this.getHotSearch();
+    this.getBanner();
   },
 
   /**
    * 页面上拉触底事件的处理函数
    */
   onReachBottom: function() {
-    var products = this.data.products;
-    products.push(...this.data.products_1);
+    var page = this.data.page + 1;
     this.setData({
-      products
+      page
     })
+    this.loadData();
   },
 
   /**
    * 用户点击右上角分享
    */
   onShareAppMessage: function() {
-
     wx.showShareMenu({
       withShareTicket: true
     })
-
-
     return {
       title: '转发时显示的标题',
       path: '转发的页面路径',
-
       success: res => {
         console.log('--- 转发回调 ---', res);
 
@@ -243,7 +257,6 @@ Page({
       fail: () => {
         console.log('--- 转发失败 ---', path);
       }
-
     }
   }
 })

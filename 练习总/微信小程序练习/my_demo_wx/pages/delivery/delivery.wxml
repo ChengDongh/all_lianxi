@@ -1,8 +1,8 @@
 <!--pages/delivery/delivery.wxml-->
 <view class='delivery'>
-  <view class='delivery_box' wx:for="{{addressList}}" wx:key="{{item}}" bindtap="selectTap" bindtouchstart="touchS" style="{{item.left}}" bindtouchmove="touchM" bindtouchend="touchE" data-index="{{index}}">
+  <view class='delivery_box' wx:for="{{addressList}}" wx:key="{{item}}" data-id="{{item.id}}" bindtap="selectTap" bindtouchstart="touchS" style="{{item.left}}" bindtouchmove="touchM" bindtouchend="touchE" data-index="{{index}}">
     <view class='list'>
-      <view class='list_header' catchtap='edit' data-index='{{index}}'>
+      <view class='list_header' data-id="{{item.id}}" catchtap='edit' data-index='{{index}}'>
         <image src='../resource/image/edit.png'></image>
       </view>
       <view class='list_content'>
@@ -15,7 +15,7 @@
         </view>
       </view>
     </view>
-    <view class="delete-btn" data-index="{{index}}" catchtap="delItem">
+    <view class="delete-btn" data-id="{{item.id}}" catchtap="delItem">
       删除
     </view>
   </view>

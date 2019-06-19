@@ -4,10 +4,7 @@
     <div>
       999{{val1}}
     </div>
-    <next v-bind="$attrs">
-      <div :val1="val1">
-        {{val1}}
-      </div>
+    <next v-bind="$attrs" v-on="$listeners">
     </next>
   </div>
 

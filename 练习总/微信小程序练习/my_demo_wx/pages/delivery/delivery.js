@@ -1,35 +1,14 @@
-// wx.getSetting({
-//   success: res => {
-//     if (res.authSetting['scope.userInfo']) {
-//       // 已经授权，可以直接调用 getUserInfo 获取头像昵称，不会弹框     
-//       wx.getUserInfo({
-//         success: res => {
-//           // 可以将 res 发送给后台解码出 unionId
-//           this.globalData.userInfo = res.userInfo
-
-//           // 由于 getUserInfo 是网络请求，可能会在 Page.onLoad 之后才返回
-//           // 所以此处加入 callback 以防止这种情况
-//           if (this.userInfoReadyCallback) {
-//             this.userInfoReadyCallback(res)
-//           }
-//         }
-//       })
-//     } else {//没有授权 跳转到授权页面
-//       wx.reLaunch({
-//         url: '/pages/authorize/authorize',
-//       })
-//     }
-//   }
-// })
-// pages/delivery/delivery.js
+var utils = require("../../utils/util.js");
+var WxNotificationCenter = require("../../utils/WxNotificationCenter.js")
 Page({
 
   /**
    * 页面的初始数据
    */
   data: {
+    openid:'',
     addressList: [],
-    delBtnWidth: 120,
+    delBtnWidth: 110,
     id: null,
     isBack: 'true'
   },
@@ -43,109 +22,101 @@ Page({
         isBack: options.isBack
       })
     }
+    this.setData({
+      openid: wx.getStorageSync('openid')
+    })
   },
 
   /**
    * 生命周期函数--监听页面初次渲染完成
    */
   onReady: function() {
-
+    this.initEleWidth();
   },
 
   /**
    * 生命周期函数--监听页面显示
    */
   onShow: function() {
-    var addressList = wx.getStorageSync('addresssInfoALL');
-    this.setData({
-      addressList
-    });
-    this.initEleWidth();
-    if (this.data.id != null) {//记录所修改地址的id，如果是结算页面的id 那就更改结算页面的地址信息
-      wx.setStorage({
-        key: 'addresssInfo',
-        data: addressList[this.data.id],
-      })
-    }
+    this.getAddressAll();
+  },
+  getAddressAll:function(){
+    var that = this;
+    wx.showLoading({
+      title: '加载中',
+    })
+    wx.request({
+      url: 'http://hisin.natapp1.cc/address//getAllAddress',
+      method: 'POST',
+      data: {
+        openid: that.data.openid
+      },
+      header: {
+        'content-type': 'application/x-www-form-urlencoded'
+      },
+      success: function (res) {
+        wx.hideLoading();
+        if (res.data.code == 200) {
+          that.setData({
+            addressList: res.data.data
+          })
+         
+        } else {
+          wx.showToast({
+            title: res.data.msg,
+            icon: 'none'
+          })
+        }
+
+      },
+      fail: function (err) {
+        console.log(err)
+      }
+    })
   },
   //修改地址
   edit: function(e) {
-    var id = e.currentTarget.dataset.index;
-    var address_one = wx.getStorageSync('addresssInfoALL')[id];
-    var address_two = wx.getStorageSync('addresssInfo');
-    if (address_one.name == address_two.name && address_one.mobile == address_two.mobile && address_one.province == address_two.province && address_one.area == address_two.area && address_one.city == address_two.city && address_one.location == address_two.location) {//记录所修改地址的id 用来判断是否是结算页面的地址
-      this.setData({
-        id: id
-      })
-    }
+    var id = e.currentTarget.dataset.id;
     wx.navigateTo({
       url: '/pages/address/address?id=' + id + '',
     })
   },
   //选择结算页面的地址
   selectTap: function(e) {
-    console.log(this.data.isBack)
     var that = this;
-    var index = e.currentTarget.dataset.index;
-    var address_choose = wx.getStorageSync('addresssInfoALL')[index];
+    let id = e.currentTarget.dataset.id;
     if (that.data.isBack == 'true') {
-      console.log(11111)
-      wx.setStorage({
-        key: 'addresssInfo',
-        data: address_choose,
-        success: function(res) {
-          wx.navigateBack({
-            delta: 1
-          })
-        }
+      WxNotificationCenter.postNotificationName("changeaddressid", {
+        addressid: id
+      });
+      wx.navigateBack({
+        delta: 1
       })
     }
   },
   //删除地址
   delItem: function(e) {
-    var addressList = this.data.addressList;
-    var index = e.currentTarget.dataset.index;
-    var address_two = wx.getStorageSync('addresssInfo');//获取结算页面的地址信息（无法通过后台设置id 就获取地址信息 从而进行进一步的对比 判断）
-    var address_one = wx.getStorageSync('addresssInfoALL')[index];
-    addressList.splice(index, 1);
-    this.setData({
-      addressList
-    });
-    if (address_one.name == address_two.name && address_one.mobile == address_two.mobile && address_one.province == address_two.province && address_one.area == address_two.area && address_one.city == address_two.city && address_one.location == address_two.location) {//判断是否删除的是结算页面的地址
-      wx.removeStorage({
-        key: 'addresssInfo',
-        success: function(res) {
-          wx.showToast({
-            title: '删除成功',
-          })
-        },
-      })
-      wx.setStorage({
-        key: 'addresssInfoALL',
-        data: addressList,
-      })
-    } else {
-      if (addressList.length <= 0) {
-        wx.removeStorage({
-          key: 'addresssInfoALL',
-          success: function(res) {
-            wx.showToast({
-              title: '删除成功',
-            })
-          },
-        })
-      } else {
-        wx.setStorage({
-          key: 'addresssInfoALL',
-          data: addressList,
-          success: function() {
-            wx.showToast({
-              title: '删除成功',
-            })
-          }
-        })
+    var that = this;
+    var id = e.currentTarget.dataset.id;
+    wx.request({
+      url: 'http://hisin.natapp1.cc/address/deleteAddress',
+      method:'POST',
+      data:{
+        openid:that.data.openid,
+        addressId: id,
+      },
+      header: {
+        'content-type': 'application/x-www-form-urlencoded'
+      },
+      success:function(res){
+        if(res.data.code == 200){
+          that.getAddressAll();
+        }
+      },
+      fail:function(err){
+        console.log(err)
       }
-    }
+    })
   },
   //获取元素自适应后的实际宽度
   getEleWidth: function(w) {
@@ -167,6 +138,13 @@ Page({
   },
   // 左滑功能(getEleWidth() initEleWidth() touchS() touchM() touchE())
   touchS: function(e) {
+    var that = this;
+    var addressList = that.data.addressList
+    for (let i in addressList){
+      if (addressList[i].left){
+        addressList[i].left = "margin-left:0px"
+      }
+    }
     if (e.touches.length == 1) {
       this.setData({
         startX: e.touches[0].clientX
