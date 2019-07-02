@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <style>
+        .info-tab-top {
+            position: relative;
+        }
+        .info-tab-top::after {
+            content: '';
+            border: 4px solid transparent;
+            border-top-color: #2c8ac2;
+            position: absolute;
+            top: 0;
+        }
+        .info-tab-bottom{
+            position: relative;
+            top: 50px;
+        }
+        .info-tab-bottom::after{
+            content: '';
+            border: 4px solid transparent;
+            border-bottom-color: red;
+            position: absolute;
+            bottom: 0;
+        }
+    </style>
+</head>
+<body>
+<div class="waterfall-container">
+    <div class="info-tab-top"></div>
+    <div class="info-tab-bottom"></div>
+</div>
+</body>
+</html>

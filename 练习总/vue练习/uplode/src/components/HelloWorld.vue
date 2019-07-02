@@ -39,6 +39,7 @@
     <!--<button @click="go(1)">上移</button>-->
     <!--<button @click="go(-1)">下移</button>-->
     <!--<button @click="del">删除</button>-->
+    <div>{{phone | telHide}}</div>
     <input type="file" @change="upload($event)" />
   </div>
 
@@ -55,6 +56,7 @@
         images: [],
         isActive: null,
         imagesIndex: -1,
+        phone:'13912345678',
       }
     },
     created() {

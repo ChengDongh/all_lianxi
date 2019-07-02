@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>用户注册</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <link rel="stylesheet" type="text/css" href="./css/register.css"/>
+    <script>!function (e) {
+        function t(a) {
+            if (i[a]) return i[a].exports;
+            var n = i[a] = {exports: {}, id: a, loaded: !1};
+            return e[a].call(n.exports, n, n.exports, t), n.loaded = !0, n.exports
+        }
+
+        var i = {};
+        return t.m = e, t.c = i, t.p = "", t(0)
+    }([function (e, t) {
+        "use strict";
+        Object.defineProperty(t, "__esModule", {value: !0});
+        var i = window;
+        t["default"] = i.flex = function (normal, e, t) {
+            var a = e || 100, n = t || 1, r = i.document, o = navigator.userAgent,
+                d = o.match(/Android[\S\s]+AppleWebkit\/(\d{3})/i), l = o.match(/U3\/((\d+|\.){5,})/i),
+                c = l && parseInt(l[1].split(".").join(""), 10) >= 80,
+                p = navigator.appVersion.match(/(iphone|ipad|ipod)/gi), s = i.devicePixelRatio || 1;
+            p || d && d[1] > 534 || c || (s = 1);
+            var u = normal ? 1 : 1 / s, m = r.querySelector('meta[name="viewport"]');
+            m || (m = r.createElement("meta"), m.setAttribute("name", "viewport"), r.head.appendChild(m)), m.setAttribute("content", "width=device-width,user-scalable=no,initial-scale=" + u + ",maximum-scale=" + u + ",minimum-scale=" + u), r.documentElement.style.fontSize = normal ? "50px" : a / 2 * s * n + "px"
+        }, e.exports = t["default"]
+    }]);
+    flex(false, 100, 1);</script>
+</head>
+
+<body>
+<img class="bodyImg" src="./image/background.png" alt="">
+<div class="body_box">
+    <div class="content">
+        <div class="title">
+            <span style="color: white;">注册账号</span>
+        </div>
+        <div class="input_cont">
+            <div class="input_postion">
+                <img src="./image/账号-图标.png" alt="">
+                <input id="info_zh" type="text" placeholder="请输入英文或数字账号">
+            </div>
+        </div>
+        <div class="info info_zh">账号格式输入错误</div>
+        <div class="input_cont">
+            <div class="input_postion">
+                <img src="./image/密码-图标.png" alt="">
+                <input id="info_mm" type="password" placeholder="请输入6-12为密码">
+            </div>
+        </div>
+        <div class="info info_mm">密码错误</div>
+        <div class="input_cont">
+            <div class="input_postion">
+                <img style="height: 0.25rem;top: 0.06rem;" src="./image/确认密码-图标.png" alt="">
+                <input id="info_mm2" type="password" placeholder="请确认密码">
+            </div>
+        </div>
+        <div class="info info_mm2">两次密码输入不一致</div>
+        <div class="input_cont">
+            <div class="input_postion">
+                <img style="top:0.09rem;height: 0.3rem;width: 0.2rem" src="./image/手机-图标.png" alt="">
+                <input id="info_sj" type="number" placeholder="请输入11位手机号"/>
+            </div>
+        </div>
+        <div class="info info_sj">手机号格式错误</div>
+        <div class="input_cont">
+            <div class="input_postion">
+                <img style="height: 0.3rem;top: 0.07rem;" src="./image/验证码-图标.png" alt="">
+                <input id="info_code" style="width: 30%" type="text" placeholder="请输入验证码">
+                <button class="submit_code" id="submit_code">发送验证码</button>
+            </div>
+        </div>
+        <div class="info info_code">验证码错误</div>
+        <div class="input_cont" style="padding: 0.5rem 0">
+            <div class="input_postion">
+                <button class="submit" id="submit">
+                注册
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="./js/jquery.js" type="text/javascript" charset="utf-8"></script>
+<script src="./js/md5.js" type="text/javascript" charset="utf-8"></script>
+<script src="./js/common.js" type="text/javascript" charset="utf-8"></script>
+<script type="text/javascript">
+    window.onload = function () {
+        $('#info_zh').blur(function () {
+            var reg = /^[0-9a-zA-Z]+$/
+            if (!reg.test($('#info_zh').val())) {
+                $('.info_zh').css('opacity', '1')
+            } else {
+                $('.info_zh').css('opacity', '0')
+            }
+        })
+        $('#info_mm').blur(function () {
+            var reg = /^[a-zA-Z0-9]{6,12}$/
+            if (!reg.test($('#info_mm').val())) {
+                $('.info_mm').css('opacity', '1')
+            } else {
+                $('.info_mm').css('opacity', '0')
+            }
+        })
+        $('#info_sj').blur(function () {
+            var reg = /^1[3|5|7|6|8|9]\d{9}$/;
+            if (!reg.test($('#info_sj').val())) {
+                $('.info_sj').css('opacity', '1');
+            } else {
+                $('.info_sj').css('opacity', '0')
+            }
+        })
+        $('#info_mm2').blur(function () {
+            if ($('#info_mm').val() != $('#info_mm2').val() || $('#info_mm2').val() == 0) {
+                $('.info_mm2').css('opacity', '1')
+            } else {
+                $('.info_mm2').css('opacity', '0')
+            }
+        })
+        $('#info_code').blur(function () {
+            if ($('#info_code').val().trim() == '') {
+                $('.info_code').css('opacity', '1')
+            } else {
+                $('.info_code').css('opacity', '0')
+            }
+        })
+        $('#submit').click(function () {
+            var reg_info_zh = /^[0-9a-zA-Z]+$/;
+            var reg_info_mm = /^[a-zA-Z0-9]{6,12}$/;
+            var reg_info_sj = /^1[3|5|7|6|8|9]\d{9}$/
+            if (!reg_info_zh.test($('#info_zh').val())) {
+                $('.info_zh').css('opacity', '1')
+                return false
+            } else if (!reg_info_mm.test($('#info_mm').val())) {
+                $('.info_mm').css('opacity', '1')
+                return false
+            } else if ($('#info_mm').val() != $('#info_mm2').val() || $('#info_mm2').val() == 0) {
+                $('.info_mm2').css('opacity', '1')
+                return false
+            } else if (!reg_info_sj.test($('#info_sj').val())) {
+                $('.info_sj').css('opacity', '1')
+                return false
+            } else if ($('#info_code').val().trim() == '') {
+                $('.info_code').css('opacity', '1')
+                return false
+            }
+            $.ajax({
+                url: "http://18.162.110.198:9100/player/register",
+                type: "get",
+                data: {
+                    login_account: $('#info_zh').val(),
+                    login_pwd: hex_md5("bgc_salt" + $('#info_mm').val()),
+                    phone_num: $('#info_sj').val(),
+                    phone_country: 86,
+                    mobile_code: $('#info_code').val().trim(),
+                    parent_account: "losetear"
+                },
+                success: function (res) {
+                    switch (res.code) {
+                        case 1001:
+                            msgTip.ok("注册成功", function () {
+                                location.href = "./d.html";
+                            });
+                            break;
+                        case 1002:
+                            msgTip.err("手机验证码错误", function () {
+                            });
+                            break;
+                        case 1003:
+                            msgTip.err("推荐人账号不存在", function () {
+                            });
+                            break;
+                        case 1004:
+                            msgTip.err(" 账号已经存在", function () {
+                            });
+                            break;
+                        case 1010:
+                            msgTip.err("手机号已经存在", function () {
+                            });
+                            break;
+                        case 1020:
+                            msgTip.err("注册数据不全", function () {
+                            });
+                            break;
+                        case 1021:
+                            msgTip.err("用户名长度必须为6~18位", function () {
+                            });
+                            break;
+                        case 1022:
+                            msgTip.err("用户名必须是由数字和字母组成", function () {
+                            });
+                            break;
+                        case 1023:
+                            msgTip.err("密码长度必须为加密后的32位字符串", function () {
+                            });
+                            break;
+                    }
+                }
+            })
+        })
+        $('#submit_code').click(function () {
+            var reg = /^1[3|5|7|6|8|9]\d{9}$/;
+            var time = 60;
+            var yzmtime;
+            if($('#submit_code').attr("isdisabled") == 'true'){
+                msgTip.err("60s内无法点击", function () {
+                });
+                return false;
+            }
+            if (!reg.test($('#info_sj').val())) {
+                $('.info_sj').css('opacity', '1');
+                return false;
+            } else {
+                $('.info_sj').css('opacity', '0');
+                $.ajax({
+                    url: "http://18.162.110.198:9100/player/send_reg_sms",
+                    type: "get",
+                    data: {
+                        phone_num: $('#info_sj').val(),
+                        phone_country: 86,
+                    },
+                    success: function (res) {
+                        if (res.code == 1001) {
+                            yzmtime = setInterval(function () {
+                                $('#submit_code').html('倒计时'+ time + 's')
+                                $('#submit_code').attr('isdisabled','true')
+                                if (time == 0) {
+                                    $('#submit_code').attr("isdisabled",'false');
+                                    $('#submit_code').html('发送验证码')
+                                    clearInterval(yzmtime);
+                                }
+                                time--;
+                            }, 1000)
+                        }
+                    }
+                })
+            }
+        })
+    }
+</script>
+</body>
+
+</html>
